@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+
+\usepackage[letterpaper, margin=2.2cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+
+\onehalfspacing
+
+\begin{document}
+
+\section{KPIs medibles según ISO/IEC 25023}
+
+Con base en el estándar ISO/IEC 25023, se definieron indicadores clave de desempeño (KPIs) para evaluar atributos de calidad relevantes en el proyecto Cal.com. Estos indicadores permiten medir objetivamente el comportamiento del sistema y verificar el cumplimiento de estándares de calidad asociados a disponibilidad, rendimiento, mantenibilidad, compatibilidad y usabilidad \cite{iso25023}. Además, la selección de estas métricas se relaciona con prácticas de medición y aseguramiento de calidad descritas por Pressman y Maxim \cite{pressman2020}.
+
+\subsection{Disponibilidad del sistema}
+
+\textbf{Característica ISO 25010 relacionada:} Fiabilidad
+
+\textbf{KPI:} Disponibilidad del sistema
+
+\textbf{Fórmula:}
+
+\[
+Disponibilidad = \frac{Tiempo\ Operativo}{Tiempo\ Operativo + Tiempo\ de\ Inactividad} \times 100
+\]
+
+\textbf{Umbral:} $\geq 99.5\%$
+
+\textbf{Herramienta de medición:} Grafana y logs del servidor.
+
+\subsection{Tiempo promedio de respuesta}
+
+\textbf{Característica ISO 25010 relacionada:} Eficiencia de desempeño
+
+\textbf{KPI:} Tiempo promedio de respuesta de APIs
+
+\textbf{Fórmula:}
+
+\[
+TPR = \frac{\sum Tiempo\ de\ respuesta}{Numero\ de\ solicitudes}
+\]
+
+\textbf{Umbral:} $\leq 2\ segundos$
+
+\textbf{Herramienta de medición:} Postman y Lighthouse.
+
+\subsection{Cobertura de pruebas}
+
+\textbf{Característica ISO 25010 relacionada:} Mantenibilidad
+
+\textbf{KPI:} Cobertura de pruebas automatizadas
+
+\textbf{Fórmula:}
+
+\[
+Cobertura = \frac{Lineas\ probadas}{Total\ de\ lineas\ de\ codigo} \times 100
+\]
+
+\textbf{Umbral:} $\geq 80\%$
+
+\textbf{Herramienta de medición:} Jest y SonarQube.
+
+\subsection{Compatibilidad con navegadores}
+
+\textbf{Característica ISO 25010 relacionada:} Compatibilidad
+
+\textbf{KPI:} Compatibilidad multiplataforma
+
+\textbf{Fórmula:}
+
+\[
+Compatibilidad = \frac{Pruebas\ exitosas}{Pruebas\ totales} \times 100
+\]
+
+\textbf{Umbral:} $\geq 95\%$
+
+\textbf{Herramienta de medición:} BrowserStack.
+
+\subsection{Tasa de errores críticos}
+
+\textbf{Característica ISO 25010 relacionada:} Fiabilidad
+
+\textbf{KPI:} Errores críticos por semana
+
+\textbf{Fórmula:}
+
+\[
+TEC = \frac{Errores\ criticos}{Semana}
+\]
+
+\textbf{Umbral:} $\leq 3$
+
+\textbf{Herramienta de medición:} GitHub Issues y Sentry.
+
+\subsection{Accesibilidad de la interfaz}
+
+\textbf{Característica ISO 25010 relacionada:} Usabilidad
+
+\textbf{KPI:} Nivel de cumplimiento WCAG
+
+\textbf{Fórmula:}
+
+\[
+Accesibilidad = \frac{Elementos\ accesibles}{Elementos\ evaluados} \times 100
+\]
+
+\textbf{Umbral:} $\geq 90\%$
+
+\textbf{Herramienta de medición:} Lighthouse y WAVE.
+
+\newpage
+
+\section{Aportes individuales}
+
+\textbf{Diego Calva Alvarez}
+
+Mi aporte principal en este entregable fue el desarrollo de la sección 4.3, correspondiente a los KPIs medibles según ISO/IEC 25023. Para esta parte definí indicadores específicos aplicables al proyecto Cal.com, considerando atributos de calidad como disponibilidad, rendimiento, mantenibilidad, compatibilidad, fiabilidad y usabilidad. También establecí fórmulas, umbrales numéricos y herramientas de medición para cada KPI, con el objetivo de que las métricas pudieran evaluarse de forma clara y objetiva dentro del proyecto.
+
+\newpage
+
+\nocite{ieee730}
+
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}
