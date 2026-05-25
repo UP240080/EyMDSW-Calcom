@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\renewcommand*{\familydefault}{\sfdefault}
+\usepackage[]{geometry}
+\usepackage{setspace}
+\usepackage{xcolor}
+\definecolor{azul}{RGB}{0, 160, 255}
+\definecolor{azul2}{RGB}{7, 74, 163}
+\usepackage{tikz}
+\usepackage{float}
+\pagenumbering{arabic}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2 cm, right=2 cm, top=2 cm, bottom=2 cm}
+    \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{-45} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \fill[azul] (12, -27) rectangle(15, 4);
+    \end{tikzpicture}
+{\huge \textsc{\textbf{Aplicación de estándares de calidad
+al proyecto integrador del equipo: Cal.com}}}\\ [10pt]
+    {\Large \textsc{Curso y Grupo: Estándares y Métricas para el Desarrollo de Software, TII05D}}\\[5pt]
+    {\Large \textsc{Integrantes:\\Diego Calva \\ Gabriela González\\ Diana Macias\\ Rebeca De La Cruz\\ Yael Cervantes \\https://github.com/UP240080/EyMDSW-Calcom.git}} \\ [5pt]
+    \begin{minipage}{3 cm}
+    \hspace{0.5 cm} \rotatebox{90}{\Large \textsc{{\color{white}{Ing en}} Tecnologías de la Información e Innovación Digital}}
+        
+    \end{minipage} \hfill
+    \begin{minipage}{4 cm}
+        \begin{spacing}{5}
+        {\color{white} \fontsize{60}{70} \selectfont \bfseries 2\\ 0\\ 2\\ 6} 
+        \end{spacing}
+    \end{minipage}
+    \vfill
+    \begin{flushleft}
+      \color{white} { {\Large \textsc{Universidad Politécnica\\ de Aguascalientes}} \\ [10pt]
+        {\Large \textsc{24/05/2026}}
+        }
+    \end{flushleft}
+\end{titlepage}
+
+\begin{titlepage}
+  \Large{\tableofcontents}
+ \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{60} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \rotatebox{-85} {\fill[azul2] (12, -23) rectangle(21, 20);}
+    \end{tikzpicture}
+
+  
+\end{titlepage}
+
+\newpage
+\section{Introducción}
+El análisis de la calidad del software se ha convertido en un componente esencial dentro del desarrollo moderno, especialmente en proyectos que, como Cal.com, operan en entornos dinámicos, con múltiples integraciones externas y una base de usuarios diversa. La plataforma Cal.com, seleccionada como proyecto integrador del equipo, representa un caso relevante para estudiar la aplicación de estándares internacionales debido a su naturaleza open‑source, su madurez tecnológica y su adopción creciente como alternativa a servicios comerciales de programación de citas. Su arquitectura modular, basada en tecnologías contemporáneas como Next.js, TypeScript y Prisma, permite examinar de manera detallada cómo los atributos de calidad influyen en la experiencia del usuario, la interoperabilidad del sistema y la mantenibilidad del código.\\
+
+La importancia de evaluar la calidad en un proyecto como Cal.com radica en que su funcionamiento depende de la interacción fluida entre usuarios finales, administradores, servicios externos y componentes internos. La gestión de disponibilidad, la reserva de citas y la sincronización con calendarios externos son procesos que requieren precisión, estabilidad y claridad en la interfaz. Estos elementos no solo determinan la percepción del usuario, sino que también influyen en la confiabilidad del sistema y en su capacidad para integrarse en flujos de trabajo reales. En este sentido, los estándares internacionales proporcionan un marco sólido para analizar el software desde perspectivas complementarias que abarcan tanto la calidad del producto como la calidad en uso.\\
+
+La aplicación de modelos como ISO/IEC 25010, ISO/IEC 25023, IEEE 730 y MoProSoft permite comprender cómo se estructura formalmente la calidad y cómo se traduce en prácticas dentro del ciclo de vida del software. Estos estándares ofrecen conceptos, métricas y procesos que facilitan la evaluación objetiva del sistema, la identificación de riesgos y la definición de estrategias de mejora continua. En el caso de Cal.com, su complejidad técnica y su dependencia de integraciones externas hacen especialmente relevante el análisis de atributos como la usabilidad, la compatibilidad, la accesibilidad y la mantenibilidad, los cuales influyen directamente en la estabilidad y confiabilidad del sistema.\\
+
+El estudio de la calidad en este proyecto también permite reflexionar sobre el papel que desempeñan los equipos de desarrollo en la adopción de prácticas formales, incluso en contextos académicos o de pequeña escala. La experiencia adquirida al aplicar estándares internacionales contribuye a fortalecer la capacidad del equipo para enfrentar proyectos reales, comprender la importancia de la medición y la verificación, y reconocer que la calidad no es un resultado espontáneo, sino una consecuencia de procesos bien definidos y ejecutados con disciplina. En conjunto, este análisis ofrece una visión integral del valor que aportan los estándares de calidad al desarrollo de software y de cómo estos pueden guiar la construcción de sistemas más confiables, accesibles y orientados al usuario.
+
+\newpage
+\section{Descripción del proyecto integrador}
+El proyecto integrador seleccionado corresponde a Cal.com, una plataforma open‑source ampliamente utilizada para la programación de citas, la gestión de disponibilidad y la automatización de flujos de reserva. Su elección se fundamenta en que se trata de un software maduro, con una comunidad activa, un repositorio extenso y un historial de commits que permite realizar análisis de métricas, calidad y procesos de desarrollo. Además, su arquitectura basada en tecnologías modernas como Next.js, TypeScript y Prisma facilita la comprensión de sus componentes y la identificación de atributos de calidad relevantes.\\
+
+Cal.com opera como una solución que permite a usuarios individuales, equipos y organizaciones gestionar su disponibilidad y ofrecer enlaces de reserva personalizados, todo con el motivo de facilitar las cosas. Su contexto de uso abarca desde profesionales independientes que requieren una herramienta sencilla para agendar reuniones, hasta empresas que integran la plataforma en flujos de trabajo más complejos. La plataforma permite configurar horarios, definir reglas de disponibilidad, gestionar excepciones, integrar calendarios externos mediante APIs y ofrecer una experiencia de reserva fluida para usuarios finales. Este contexto de uso implica que la calidad del software debe evaluarse desde distintas dimensiones, especialmente aquellas relacionadas con la interacción del usuario, la compatibilidad con servicios externos y la estabilidad del sistema.\\
+
+Los usuarios objetivo del proyecto incluyen tanto usuarios finales no técnicos que interactúan con el flujo de reserva, como administradores y operadores que configuran la plataforma en entornos empresariales. También se consideran stakeholders relevantes a los desarrolladores que contribuyen al repositorio open‑source, a las organizaciones que integran Cal.com en sus sistemas internos y a los administradores de infraestructura que despliegan la plataforma en entornos autoalojados. Esta diversidad de perfiles implica que el software debe cumplir con altos estándares de usabilidad, accesibilidad, compatibilidad y mantenibilidad.\\
+
+El stack tecnológico de Cal.com se basa en Next.js como framework principal para la construcción de interfaces web, TypeScript como lenguaje tipado que mejora la mantenibilidad del código, Prisma como ORM para la gestión de datos y PostgreSQL como base de datos principal. Además, la plataforma incorpora autenticación OAuth, APIs REST y múltiples integraciones externas, lo que incrementa su complejidad técnica y la necesidad de aplicar estándares de calidad de manera rigurosa. La ejecución local del proyecto requiere la instalación de dependencias mediante Yarn y la configuración de archivos de entorno, lo que evidencia la importancia de la documentación técnica y la consistencia en la configuración del entorno de desarrollo.\\
+
+El alcance estimado del proyecto, considerando las funcionalidades seleccionadas para el análisis del cuatrimestre, incluye tres módulos principales: la gestión de disponibilidad, el flujo de reserva de citas y el panel administrativo. Cada uno de estos módulos contiene flujos de usuario con al menos cuatro pasos, lo que permite aplicar métricas de calidad, diseñar casos de prueba y evaluar atributos como usabilidad, compatibilidad y accesibilidad. Para representar la arquitectura general del sistema, se describe un diagrama de alto nivel en el que se identifican los componentes principales: la interfaz de usuario construida en Next.js, el backend que gestiona la lógica de negocio, el ORM Prisma que actúa como intermediario con la base de datos PostgreSQL, y los servicios externos como Google Calendar, Outlook e iCloud que se integran mediante APIs. Este diagrama conceptual permite visualizar la interacción entre los módulos y comprender la complejidad del sistema sin necesidad de incluir imágenes o figuras.
+
+{\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{img/Captura de pantalla 2026-05-23 214402.png}
+        \label{fig:placeholder}
+    \end{figure}}
+\newpage
+\section{Conclusión integral}
+
+La aplicación de los estándares internacionales de calidad al proyecto integrador Cal.com permitió al equipo comprender de manera práctica y concreta cómo los marcos normativos transforman la evaluación del software en un proceso sistemático, objetivo y reproducible. A lo largo de este análisis, quedó claro que la calidad no es un atributo que emerge de forma espontánea durante el desarrollo, sino el resultado de decisiones deliberadas, criterios bien definidos y procesos estructurados que guían cada etapa del ciclo de vida del software.
+
+La utilización del modelo ISO/IEC 25010 permitió al equipo identificar cuáles de las ocho características de calidad de producto resultan más relevantes para un sistema como Cal.com, considerando su naturaleza open‑source, su diversidad de usuarios y su dependencia de integraciones externas. En particular, la usabilidad, la compatibilidad y la mantenibilidad emergieron como las características de mayor impacto sobre la experiencia del usuario y la sostenibilidad técnica del proyecto. Este ejercicio de priorización demostró que no todas las características tienen el mismo peso en todos los contextos, y que la correcta identificación de las más críticas es fundamental para orientar los esfuerzos de desarrollo y verificación.
+
+A través de ISO/IEC 25023, el equipo comprendió que cada característica de calidad puede traducirse en indicadores numéricos concretos, con fórmulas, umbrales y herramientas de medición específicas. Este vínculo entre el modelo conceptual y la medición operativa es precisamente lo que convierte a los estándares en herramientas útiles para la práctica profesional, pues permite que las decisiones técnicas se fundamenten en evidencia cuantificable y no únicamente en apreciaciones subjetivas. Definir KPIs como la disponibilidad del sistema, la tasa de completitud funcional o el tiempo medio de respuesta ofrece al equipo una base sólida para evaluar el estado actual del proyecto y establecer metas de mejora.
+
+La elaboración del Plan SQA preliminar conforme a IEEE 730 representó uno de los aprendizajes más significativos del ejercicio, ya que evidenció la importancia de documentar formalmente los procesos de aseguramiento de calidad antes de que el desarrollo avance. Definir roles, responsabilidades, estrategias de prueba y criterios de reporte de problemas no solo organiza el trabajo del equipo, sino que también establece compromisos verificables frente a los stakeholders del proyecto. Este aspecto resulta especialmente relevante en contextos reales donde la trazabilidad y la auditoría son requisitos contractuales o regulatorios.
+
+Finalmente, el análisis del modelo de madurez más adecuado para el contexto del equipo permitió reflexionar sobre las diferencias entre marcos como CMMI, MoProSoft e ISO/IEC 33000, y comprender que la selección del modelo apropiado depende no solo del tamaño del equipo o del tipo de proyecto, sino también del mercado objetivo y de la cultura organizacional. En conjunto, esta experiencia confirmó que la calidad del software es una dimensión técnica y organizacional que requiere compromiso, método y aprendizaje continuo, valores que el equipo se propone mantener como base de su práctica profesional.
+
+\end{document}
