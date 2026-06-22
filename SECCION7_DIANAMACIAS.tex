@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Paquetes necesarios y formato de la tarea ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing
+
+\begin{document}
+
+% --- PORTADA ---
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\bfseries\LARGE UNIVERSIDAD POLITÉCNICA DE AGUASCALIENTES \par}
+    \vspace{0.5cm}
+    {\scshape\Large Ing. en Tecnologías de la Información e Innovación Digital \par}
+    
+    \vspace{2.5cm}
+    
+    {\bfseries\huge Tarea 07: Automatización de pruebas y análisis de calidad \par}
+    \vspace{0.5cm}
+    {\itshape\Large Aplicación al proyecto integrador del equipo: Cal.com (J\&C) \par}
+    
+    \vspace{2.5cm}
+    
+    {\Large\bfseries CURSO Y GRUPO:\par}
+    {\large ESTÁNDARES Y MÉTRICAS PARA EL DESARROLLO DE SOFTWARE, TII05D \par}
+    
+    \vspace{2cm}
+    
+    {\Large\bfseries INTEGRANTES:\par}
+    \vspace{0.5cm}
+    {\large 
+    DIEGO CALVA \\
+    GABRIELA GONZÁLEZ \\
+    DIANA MACIAS \\
+    REBECA DE LA CRUZ \\
+    YAEL CERVANTES 
+    \par}
+    
+    \vspace{2cm}
+    
+    {\Large\bfseries ENLACE AL REPOSITORIO:\par}
+    {\large \url{HTTPS://GITHUB.COM/UP240080/EYMDSW-CALCOM.GIT} \par}
+    
+    \vfill
+    
+    {\large \textbf{21 de junio de 2026} \par}
+\end{titlepage}
+
+% --- CONTENIDO DE LA TAREA ---
+\newpage
+\section{Conclusión integral}
+La implementación de herramientas de automatización y análisis estático en nuestra plataforma J\&C representó un punto de inflexión en nuestra forma de concebir la calidad del software. Al transicionar de pruebas manuales a una suite E2E estructurada con Selenium y el patrón Page Object Model, comprendimos el valor de la mantenibilidad en el código de pruebas. Asimismo, la integración de SonarQube nos expuso a la realidad de nuestra deuda técnica; dimensionar los defectos y vulnerabilidades nos demostró que no basta con que el código funcione, sino que debe ser seguro y confiable. Finalmente, consolidar este flujo en un entorno de versionamiento colaborativo con Git fortaleció nuestra dinámica de trabajo, evidenciando que la calidad es un esfuerzo continuo y automatizable.
+
+\section{Aportes individuales y control de versiones}
+El desarrollo de esta tarea se gestionó íntegramente mediante control de versiones con Git. El historial de \textit{commits} en el repositorio del proyecto evidencia la participación colaborativa de todos los integrantes. A continuación, se detalla la contribución específica de cada miembro:
+
+\begin{itemize}
+    \item \textbf{Yael Cervantes:} Lideró la fase de investigación teórica, comparando exhaustivamente tres frameworks de automatización de pruebas E2E y tres herramientas de análisis estático de código. Su análisis crítico permitió fundamentar las decisiones tecnológicas del equipo.
+    
+    \item \textbf{Gabriela González:} Estuvo a cargo de la implementación principal de la suite de pruebas E2E utilizando Selenium y \texttt{pytest}. Diseñó la arquitectura de pruebas aplicando el patrón Page Object Model (POM) para asegurar la escalabilidad.
+    
+    \item \textbf{Diego Calva:} Complementó la suite de pruebas mediante el diseño e implementación de pruebas \textit{data-driven}. Además, fue responsable de configurar y conectar la cobertura de código utilizando \texttt{pytest-cov}, asegurando la medición de las pruebas.
+    
+    \item \textbf{Rebeca De La Cruz:} Dirigió el análisis de calidad del proyecto integrador configurando e interpretando los resultados en SonarQube. A partir de las dimensiones evaluadas, estructuró el plan priorizado de remediación de deuda técnica.
+    
+    \item \textbf{Diana Macias:} Lideró la consolidación documental del proyecto y la gestión del control de versiones. Se encargó de redactar la conclusión integral, documentar el aporte de cada integrante, administrar el repositorio en Git y asegurar el cumplimiento de la estructura formal del documento.
+\end{itemize}
+
+\end{document}
