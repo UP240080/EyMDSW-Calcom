@@ -1,0 +1,287 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\renewcommand*{\familydefault}{\sfdefault}
+\usepackage[]{geometry}
+\usepackage{setspace}
+\usepackage{xcolor}
+\definecolor{azul}{RGB}{0, 160, 255}
+\definecolor{azul2}{RGB}{7, 74, 163}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{cite}
+\pagenumbering{arabic}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2 cm, right=2 cm, top=2 cm, bottom=2 cm}
+    \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{-45} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \fill[azul] (12, -27) rectangle(15, 4);
+    \end{tikzpicture}
+{\huge \textsc{\textbf{Aplicación de estándares de calidad
+al proyecto integrador del equipo: Cal.com}}}\\ [10pt]
+    {\Large \textsc{Curso y Grupo: Estándares y Métricas para el Desarrollo de Software, TII05D}}\\[5pt]
+    {\Large \textsc{Integrantes:\\Diego Calva \\ Gabriela González\\ Diana Macias\\ Rebeca De La Cruz\\ Yael Cervantes \\https://github.com/UP240080/EyMDSW-Calcom.git}} \\ [5pt]
+    \begin{minipage}{3 cm}
+    \hspace{0.5 cm} \rotatebox{90}{\Large \textsc{{\color{white}{Ing en}} Tecnologías de la Información e Innovación Digital}}
+    \end{minipage} \hfill
+    \begin{minipage}{4 cm}
+        \begin{spacing}{5}
+        {\color{white} \fontsize{60}{70} \selectfont \bfseries 2\\ 0\\ 2\\ 6}
+        \end{spacing}
+    \end{minipage}
+    \vfill
+    \begin{flushleft}
+      \color{white} { {\Large \textsc{Universidad Politécnica\\ de Aguascalientes}} \\ [10pt]
+        {\Large \textsc{24/05/2026}}
+        }
+    \end{flushleft}
+\end{titlepage}
+
+\begin{titlepage}
+  \Large{\tableofcontents}
+ \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{60} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \rotatebox{-85} {\fill[azul2] (12, -23) rectangle(21, 20);}
+    \end{tikzpicture}
+\end{titlepage}
+
+\newpage
+\section{Introducción}
+El análisis de la calidad del software se ha convertido en un componente esencial dentro del desarrollo moderno, especialmente en proyectos que, como Cal.com, operan en entornos dinámicos, con múltiples integraciones externas y una base de usuarios diversa. La plataforma Cal.com, seleccionada como proyecto integrador del equipo, representa un caso relevante para estudiar la aplicación de estándares internacionales debido a su naturaleza open-source, su madurez tecnológica y su adopción creciente como alternativa a servicios comerciales de programación de citas. Su arquitectura modular, basada en tecnologías contemporáneas como Next.js, TypeScript y Prisma, permite examinar de manera detallada cómo los atributos de calidad influyen en la experiencia del usuario, la interoperabilidad del sistema y la mantenibilidad del código.
+
+La importancia de evaluar la calidad en un proyecto como Cal.com radica en que su funcionamiento depende de la interacción fluida entre usuarios finales, administradores, servicios externos y componentes internos. La gestión de disponibilidad, la reserva de citas y la sincronización con calendarios externos son procesos que requieren precisión, estabilidad y claridad en la interfaz. Estos elementos no solo determinan la percepción del usuario, sino que también influyen en la confiabilidad del sistema y en su capacidad para integrarse en flujos de trabajo reales. En este sentido, los estándares internacionales proporcionan un marco sólido para analizar el software desde perspectivas complementarias que abarcan tanto la calidad del producto como la calidad en uso.
+
+La aplicación de modelos como ISO/IEC 25010, ISO/IEC 25023, IEEE 730 y MoProSoft permite comprender cómo se estructura formalmente la calidad y cómo se traduce en prácticas dentro del ciclo de vida del software. Estos estándares ofrecen conceptos, métricas y procesos que facilitan la evaluación objetiva del sistema, la identificación de riesgos y la definición de estrategias de mejora continua. En el caso de Cal.com, su complejidad técnica y su dependencia de integraciones externas hacen especialmente relevante el análisis de atributos como la usabilidad, la compatibilidad, la accesibilidad y la mantenibilidad, los cuales influyen directamente en la estabilidad y confiabilidad del sistema.
+
+El estudio de la calidad en este proyecto también permite reflexionar sobre el papel que desempeñan los equipos de desarrollo en la adopción de prácticas formales, incluso en contextos académicos o de pequeña escala. La experiencia adquirida al aplicar estándares internacionales contribuye a fortalecer la capacidad del equipo para enfrentar proyectos reales, comprender la importancia de la medición y la verificación, y reconocer que la calidad no es un resultado espontáneo, sino una consecuencia de procesos bien definidos y ejecutados con disciplina. En conjunto, este análisis ofrece una visión integral del valor que aportan los estándares de calidad al desarrollo de software y de cómo estos pueden guiar la construcción de sistemas más confiables, accesibles y orientados al usuario.
+
+\newpage
+\section{Descripción del proyecto integrador}
+El proyecto integrador seleccionado corresponde a Cal.com, una plataforma open-source ampliamente utilizada para la programación de citas, la gestión de disponibilidad y la automatización de flujos de reserva. Su elección se fundamenta en que se trata de un software maduro, con una comunidad activa, un repositorio extenso y un historial de commits que permite realizar análisis de métricas, calidad y procesos de desarrollo. Además, su arquitectura basada en tecnologías modernas como Next.js, TypeScript y Prisma facilita la comprensión de sus componentes y la identificación de atributos de calidad relevantes.
+
+Cal.com opera como una solución que permite a usuarios individuales, equipos y organizaciones gestionar su disponibilidad y ofrecer enlaces de reserva personalizados. Su contexto de uso abarca desde profesionales independientes que requieren una herramienta sencilla para agendar reuniones, hasta empresas que integran la plataforma en flujos de trabajo más complejos. La plataforma permite configurar horarios, definir reglas de disponibilidad, gestionar excepciones, integrar calendarios externos mediante APIs y ofrecer una experiencia de reserva fluida para usuarios finales.
+
+Los usuarios objetivo del proyecto incluyen tanto usuarios finales no técnicos que interactúan con el flujo de reserva, como administradores y operadores que configuran la plataforma en entornos empresariales. También se consideran stakeholders relevantes a los desarrolladores que contribuyen al repositorio open-source, a las organizaciones que integran Cal.com en sus sistemas internos y a los administradores de infraestructura que despliegan la plataforma en entornos autoalojados.
+
+El stack tecnológico de Cal.com se basa en Next.js como framework principal, TypeScript como lenguaje tipado, Prisma como ORM y PostgreSQL como base de datos principal. Además, la plataforma incorpora autenticación OAuth, APIs REST y múltiples integraciones externas. El alcance del proyecto incluye tres módulos principales: la gestión de disponibilidad, el flujo de reserva de citas y el panel administrativo.
+
+\newpage
+\section{Desarrollo}
+
+\subsection{Análisis de calidad con ISO/IEC 25010}
+
+El estándar ISO/IEC 25010:2011 define el modelo de calidad del producto software a través de ocho características principales, cada una subdividida en subcaracterísticas que permiten evaluar atributos específicos del sistema. A continuación se presenta la priorización de cada característica en el contexto de Cal.com.
+
+\subsubsection{Priorización de las ocho características de Calidad de Producto}
+
+\begin{longtable}{|p{3.5cm}|p{2cm}|p{8cm}|}
+\hline
+\textbf{Característica} & \textbf{Prioridad} & \textbf{Justificación} \\
+\hline
+Adecuación funcional & Alta & Cal.com debe cubrir la totalidad de los flujos de reserva, gestión de disponibilidad y configuración de horarios. Una función faltante invalida directamente el propósito del sistema. \\
+\hline
+Eficiencia de desempeño & Alta & Los usuarios esperan que la página de reserva cargue en menos de dos segundos. Cal.com puede recibir múltiples reservas concurrentes, por lo que el comportamiento temporal es determinante. \\
+\hline
+Compatibilidad & Alta & La propuesta de valor central de Cal.com es su capacidad de integrarse con Google Calendar, Outlook e iCloud. Una falla en la sincronización representa un defecto crítico para usuarios empresariales. \\
+\hline
+Usabilidad & Alta & Cal.com atiende a usuarios no técnicos que realizan reservas sin entrenamiento previo. La reconocibilidad, aprendizaje y accesibilidad deben ser elevadas para garantizar que ambos perfiles completen sus tareas. \\
+\hline
+Fiabilidad & Alta & Una plataforma de reservas con tiempos de inactividad o pérdida de eventos genera impacto directo en los usuarios. Disponibilidad, tolerancia a fallos y recuperabilidad son subcaracterísticas críticas. \\
+\hline
+Seguridad & Media & Cal.com gestiona datos personales (correos, tokens OAuth). La confidencialidad es obligatoria, aunque no procesa pagos directamente, por lo que la prioridad es media frente a plataformas bancarias. \\
+\hline
+Mantenibilidad & Media & Al ser un proyecto open-source con múltiples colaboradores, la modularidad y modificabilidad son relevantes. TypeScript y Prisma contribuyen estructuralmente a esta característica. \\
+\hline
+Portabilidad & Baja & Cal.com está diseñado para desplegarse en infraestructura en la nube. La mayoría de usuarios accede a la instancia gestionada, por lo que la portabilidad recibe la menor prioridad relativa. \\
+\hline
+\caption{Priorización de las ocho características de ISO/IEC 25010 aplicadas a Cal.com.}
+\end{longtable}
+
+\subsubsection{Calidad en Uso: las dos características más relevantes}
+
+Además del modelo de Calidad de Producto, ISO/IEC 25010 define un modelo de Calidad en Uso compuesto por cinco características: eficacia, eficiencia, satisfacción, libertad de riesgo y cobertura de contexto.
+
+\textbf{Eficacia:} Se refiere al grado en que los usuarios logran sus objetivos con exactitud y completitud. En Cal.com, el objetivo primario es reservar una cita sin errores ni pasos innecesarios. Si el flujo presenta obstáculos, el usuario no logra su objetivo, lo que constituye un fallo directo de eficacia.
+
+\textbf{Satisfacción:} Mide el grado en que las necesidades del usuario se cumplen al utilizar el sistema. Para Cal.com, abarca la percepción subjetiva de la interfaz y la confianza en que sus datos y reservas están siendo gestionados correctamente. Un usuario satisfecho comparte su enlace de reserva, impactando directamente en la adopción de la plataforma.
+
+\subsection{KPIs medibles según ISO/IEC 25023}
+
+Con base en el estándar ISO/IEC 25023, se definieron indicadores clave de desempeño (KPIs) para evaluar atributos de calidad relevantes en Cal.com. Estos indicadores permiten medir objetivamente el comportamiento del sistema y verificar el cumplimiento de estándares de calidad.
+
+\subsubsection{Disponibilidad del sistema}
+\textbf{Característica ISO 25010:} Fiabilidad\\
+\textbf{Fórmula:} $\text{Disponibilidad} = \frac{\text{Tiempo Operativo}}{\text{Tiempo Operativo} + \text{Tiempo de Inactividad}} \times 100$\\
+\textbf{Umbral:} $\geq 99.5\%$\\
+\textbf{Herramienta:} Grafana y logs del servidor.
+
+\subsubsection{Tiempo promedio de respuesta}
+\textbf{Característica ISO 25010:} Eficiencia de desempeño\\
+\textbf{Fórmula:} $\text{TPR} = \frac{\sum \text{Tiempo de respuesta}}{\text{Número de solicitudes}}$\\
+\textbf{Umbral:} $\leq 2$ segundos\\
+\textbf{Herramienta:} Postman y Lighthouse.
+
+\subsubsection{Cobertura de pruebas}
+\textbf{Característica ISO 25010:} Mantenibilidad\\
+\textbf{Fórmula:} $\text{Cobertura} = \frac{\text{Líneas probadas}}{\text{Total de líneas de código}} \times 100$\\
+\textbf{Umbral:} $\geq 80\%$\\
+\textbf{Herramienta:} Jest y SonarQube.
+
+\subsubsection{Compatibilidad con navegadores}
+\textbf{Característica ISO 25010:} Compatibilidad\\
+\textbf{Fórmula:} $\text{Compatibilidad} = \frac{\text{Pruebas exitosas}}{\text{Pruebas totales}} \times 100$\\
+\textbf{Umbral:} $\geq 95\%$\\
+\textbf{Herramienta:} BrowserStack.
+
+\subsubsection{Tasa de errores críticos}
+\textbf{Característica ISO 25010:} Fiabilidad\\
+\textbf{Fórmula:} $\text{TEC} = \frac{\text{Errores críticos}}{\text{Semana}}$\\
+\textbf{Umbral:} $\leq 3$ por semana\\
+\textbf{Herramienta:} GitHub Issues y Sentry.
+
+\subsubsection{Accesibilidad de la interfaz}
+\textbf{Característica ISO 25010:} Usabilidad\\
+\textbf{Fórmula:} $\text{Accesibilidad} = \frac{\text{Elementos accesibles}}{\text{Elementos evaluados}} \times 100$\\
+\textbf{Umbral:} $\geq 90\%$\\
+\textbf{Herramienta:} Lighthouse y WAVE.
+
+\subsection{Plan SQA preliminar según IEEE 730}
+
+El aseguramiento de calidad de software (SQA) permite establecer procesos formales para verificar que un sistema cumpla con los requisitos funcionales y no funcionales definidos durante su desarrollo. Con base en el estándar IEEE 730-2014, se definen las secciones principales del plan aplicadas al contexto del proyecto integrador.
+
+\subsubsection{Purpose}
+El presente Plan SQA tiene como propósito establecer las actividades, responsabilidades, estándares y mecanismos de control aplicables al proyecto Cal.com durante el cuatrimestre. El plan busca garantizar que el software cumpla con los atributos de calidad priorizados: adecuación funcional, compatibilidad, usabilidad, fiabilidad y eficiencia de desempeño.
+
+\subsubsection{Management}
+El equipo está conformado por cinco integrantes con responsabilidades específicas:
+\begin{itemize}
+    \item \textbf{Gabriela González (UP240080) — Líder:} Coordina actividades y supervisa el cronograma.
+    \item \textbf{Rebeca De La Cruz (UP240158) — Developer:} Implementa funcionalidades y corrige defectos.
+    \item \textbf{Diego Calva (UP240133) — Developer:} Desarrolla módulos y apoya en pruebas técnicas.
+    \item \textbf{Diana Laura Macias (UP260022) — QA Tester:} Diseña y ejecuta casos de prueba.
+    \item \textbf{Yael Cervantes (UP240842) — Documentador:} Mantiene actualizada la documentación técnica.
+\end{itemize}
+
+\subsubsection{Standards, practices, metrics}
+\textbf{Estándares aplicados:} IEEE 730-2014, ISO/IEC 25010, convenciones TypeScript/Next.js y GitHub para control de versiones. \textbf{Prácticas:} revisión de código antes de integrar cambios, commits descriptivos, validación con linting y registro formal de defectos. \textbf{Métricas:} cobertura mínima de pruebas del 80\%, tiempo de carga menor a 2 segundos, disponibilidad mayor o igual al 99\%, cero defectos críticos al cierre del proyecto.
+
+\subsubsection{Test}
+Las pruebas se dividen en: funcionales (flujos de reserva y configuración), de integración (sincronización con Google Calendar y Outlook), de interfaz (usabilidad y accesibilidad), de regresión (posteriores a cambios importantes) y de compatibilidad (distintos navegadores y dispositivos). Cada caso incluirá identificador, objetivo, pasos, resultado esperado y evidencia.
+
+\subsubsection{Problem reporting}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{2cm}|p{5cm}|p{3cm}|}
+\hline
+\textbf{Severidad} & \textbf{Descripción} & \textbf{SLA máximo} \\
+\hline
+Crítica & El sistema no funciona o existe pérdida de datos. & 24 horas \\
+\hline
+Alta & Funcionalidad principal afectada sin solución alternativa. & 48 horas \\
+\hline
+Media & Error parcial con impacto moderado en el usuario. & 5 días \\
+\hline
+Baja & Problemas visuales o errores menores sin impacto funcional. & 10 días \\
+\hline
+\end{tabular}
+\caption{SLA de atención de defectos por severidad.}
+\end{table}
+
+\subsection{Recomendación de modelo de madurez}
+
+\subsubsection{Contexto del equipo y del proyecto}
+Cal.com es un proyecto integrador de naturaleza académica desarrollado por un equipo de cinco estudiantes de la Universidad Politécnica de Aguascalientes. El equipo no cuenta con personal de tiempo completo ni infraestructura organizacional de múltiples niveles. El proyecto tiene un alcance definido para un cuatrimestre y está orientado al mercado hispanohablante.
+
+\subsubsection{Análisis comparativo de modelos}
+\textbf{CMMI:} Modelo con cinco niveles de madurez que requiere recursos humanos especializados y una inversión significativa en consultoría. Excede los recursos disponibles para un equipo académico pequeño.
+
+\textbf{ISO/IEC 33000:} Marco neutral para la evaluación de procesos mediante evaluadores certificados. Su aplicación práctica supera la capacidad operativa de cinco personas en un proyecto cuatrimestral.
+
+\textbf{MoProSoft:} Modelo desarrollado en México para pequeñas y medianas empresas de TI, normalizado como NMX-I-059-NYCE. Reconoce explícitamente que la mayoría de las organizaciones mexicanas cuenta con equipos reducidos y recursos limitados.
+
+\subsubsection{Recomendación justificada}
+Se recomienda MoProSoft como modelo de madurez de referencia, con base en: (1) adecuación al tamaño del equipo, (2) contexto geográfico y normativo mexicano, (3) alineación con actividades del cuatrimestre mediante los procesos DMS y APE, (4) compatibilidad con ISO/IEC 25010 e ISO/IEC 25023, y (5) escalabilidad hacia CMMI en caso de requerirlo en el futuro.
+
+\subsection{Matriz de riesgos de calidad}
+
+La identificación y gestión de riesgos de calidad es un componente esencial del aseguramiento de calidad en cualquier proyecto de software. Para Cal.com, se identificaron seis riesgos específicos considerando su arquitectura, contexto de uso y dependencias externas, evaluados según su probabilidad e impacto y acompañados de una estrategia de mitigación concreta.
+
+\begin{longtable}{|p{3cm}|p{2.8cm}|p{1.3cm}|p{1.3cm}|p{4.5cm}|}
+\hline
+\textbf{Riesgo} & \textbf{Característica ISO 25010 afectada} & \textbf{Prob.} & \textbf{Impacto} & \textbf{Estrategia de mitigación} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Riesgo} & \textbf{Característica ISO 25010 afectada} & \textbf{Prob.} & \textbf{Impacto} & \textbf{Estrategia de mitigación} \\
+\hline
+\endhead
+Falla en la sincronización con calendarios externos (Google Calendar, Outlook, iCloud) debido a cambios en las APIs de terceros o errores en los tokens OAuth. & Compatibilidad & Alta & Alta & Implementar pruebas de integración automatizadas con mocks de las APIs externas. Monitorear los changelogs oficiales de cada proveedor y definir un proceso de actualización de tokens con alertas tempranas. \\
+\hline
+Tiempos de respuesta superiores a 2 segundos bajo carga concurrente, especialmente durante picos de apertura de nuevos slots de agenda. & Eficiencia de desempeño & Media & Alta & Configurar pruebas de carga con herramientas como k6 o Locust antes de cada despliegue. Establecer caché de consultas frecuentes en el ORM Prisma y optimizar las consultas a PostgreSQL con índices adecuados. \\
+\hline
+Inaccesibilidad de la interfaz para usuarios con discapacidades visuales o motoras, incumpliendo los lineamientos WCAG 2.1. & Usabilidad & Media & Alta & Ejecutar auditorías de accesibilidad con Lighthouse y WAVE en cada sprint. Incorporar revisión de contraste, navegación por teclado y etiquetas semánticas como criterios de aceptación en los casos de prueba. \\
+\hline
+Pérdida de disponibilidad del sistema durante ventanas de alta demanda, causando que usuarios no puedan completar reservas. & Fiabilidad & Baja & Alta & Configurar monitoreo continuo con Grafana y alertas ante caídas. Definir un plan de recuperación ante fallos con tiempos de respuesta documentados y pruebas de failover periódicas. \\
+\hline
+Exposición de datos personales de usuarios (correos, tokens de acceso) por configuraciones incorrectas de autenticación OAuth o variables de entorno. & Seguridad & Baja & Alta & Realizar revisiones de seguridad del archivo \texttt{.env} antes de cada despliegue. Implementar escaneo estático de secretos con herramientas como GitGuardian y restringir el acceso a tokens mediante variables de entorno cifradas. \\
+\hline
+Deuda técnica acumulada por falta de cobertura de pruebas automatizadas, dificultando el mantenimiento y la incorporación de nuevas funcionalidades sin introducir regresiones. & Mantenibilidad & Alta & Media & Establecer como criterio de integración una cobertura mínima del 80\% medida con Jest y SonarQube. Incorporar revisiones de código obligatorias antes de cada merge al repositorio principal para detectar código duplicado o sin pruebas. \\
+\hline
+\caption{Matriz de riesgos de calidad para el proyecto Cal.com.}
+\end{longtable}
+
+La priorización de los riesgos identificados revela que los tres de mayor criticidad corresponden a la sincronización con calendarios externos, el desempeño bajo carga y la accesibilidad, dado que combinan una probabilidad media-alta con un impacto alto sobre la experiencia del usuario final. Estos riesgos deben ser atendidos de forma prioritaria durante las primeras semanas del proyecto, antes de que el desarrollo avance hacia etapas de integración y despliegue.
+
+Es importante destacar que la matriz de riesgos no es un artefacto estático: deberá revisarse y actualizarse al inicio de cada sprint, incorporando nuevos riesgos que emerjan conforme el equipo profundice en el análisis del repositorio de Cal.com. La trazabilidad entre riesgos, características de calidad ISO/IEC 25010 y KPIs definidos en la sección 4.3 garantiza que cada riesgo identificado cuente con al menos un indicador cuantificable que permita detectar su materialización de forma oportuna.
+
+\newpage
+\section{Conclusión integral}
+
+La aplicación de los estándares internacionales de calidad al proyecto integrador Cal.com permitió al equipo comprender de manera práctica y concreta cómo los marcos normativos transforman la evaluación del software en un proceso sistemático, objetivo y reproducible. A lo largo de este análisis, quedó claro que la calidad no es un atributo que emerge de forma espontánea durante el desarrollo, sino el resultado de decisiones deliberadas, criterios bien definidos y procesos estructurados que guían cada etapa del ciclo de vida del software.
+
+La utilización del modelo ISO/IEC 25010 permitió al equipo identificar cuáles de las ocho características de calidad de producto resultan más relevantes para un sistema como Cal.com. En particular, la usabilidad, la compatibilidad y la mantenibilidad emergieron como las características de mayor impacto sobre la experiencia del usuario y la sostenibilidad técnica del proyecto. Este ejercicio de priorización demostró que no todas las características tienen el mismo peso en todos los contextos, y que la correcta identificación de las más críticas es fundamental para orientar los esfuerzos de desarrollo y verificación.
+
+A través de ISO/IEC 25023, el equipo comprendió que cada característica de calidad puede traducirse en indicadores numéricos concretos, con fórmulas, umbrales y herramientas de medición específicas. Definir KPIs como la disponibilidad del sistema, la tasa de completitud funcional o el tiempo medio de respuesta ofrece al equipo una base sólida para evaluar el estado actual del proyecto y establecer metas de mejora continua.
+
+La elaboración del Plan SQA preliminar conforme a IEEE 730 representó uno de los aprendizajes más significativos del ejercicio, ya que evidenció la importancia de documentar formalmente los procesos de aseguramiento de calidad antes de que el desarrollo avance. Definir roles, responsabilidades, estrategias de prueba y criterios de reporte de problemas no solo organiza el trabajo del equipo, sino que también establece compromisos verificables frente a los stakeholders del proyecto.
+
+La construcción de la matriz de riesgos de calidad permitió al equipo comprender que anticipar los problemas es tan importante como resolverlos. Identificar los riesgos vinculados a la compatibilidad con APIs externas, el desempeño bajo carga, la accesibilidad y la deuda técnica permitió priorizar las acciones de mitigación antes de que estos riesgos se materialicen en defectos que afecten a los usuarios finales. Este enfoque preventivo, sustentado en la trazabilidad entre riesgos, características ISO/IEC 25010 y KPIs medibles, representa una de las contribuciones más valiosas de esta tarea al proyecto integrador.
+
+Finalmente, el análisis del modelo de madurez más adecuado para el contexto del equipo permitió reflexionar sobre las diferencias entre marcos como CMMI, MoProSoft e ISO/IEC 33000. En conjunto, esta experiencia confirmó que la calidad del software es una dimensión técnica y organizacional que requiere compromiso, método y aprendizaje continuo, valores que el equipo se propone mantener como base de su práctica profesional.
+
+\newpage
+\section{Aportes individuales}
+
+\textbf{Diego Calva Álvarez (UP240133):} Mi aporte principal en este entregable fue el desarrollo de la sección 4.3, correspondiente a los KPIs medibles según ISO/IEC 25023. Definí indicadores específicos aplicables al proyecto Cal.com considerando disponibilidad, rendimiento, mantenibilidad, compatibilidad, fiabilidad y usabilidad, con fórmulas, umbrales numéricos y herramientas de medición para cada KPI.
+
+\textbf{Gabriela González Jaquez (UP240080):} Como líder del equipo, coordiné la integración de todas las secciones del documento y participé en la redacción de la introducción y la descripción del proyecto integrador. Revisé la coherencia del documento final y supervisé que todos los integrantes completaran sus aportes en tiempo y forma.
+
+\textbf{Diana Laura Macias Gómez (UP260022):} Mi contribución corresponde a la sección 4.6, la Matriz de riesgos de calidad. Identifiqué y analicé seis riesgos específicos del proyecto Cal.com, evaluando su probabilidad e impacto sobre las características de calidad definidas en ISO/IEC 25010 y definiendo estrategias de mitigación concretas y trazables con los KPIs establecidos por el equipo.
+
+\textbf{Rebeca De La Cruz Hernández (UP240158):} Mi aporte se centró en la sección 4.4, el Plan SQA preliminar según IEEE 730. Redacté las cinco secciones del estándar adaptadas al contexto de Cal.com: propósito, gestión del equipo, estándares y métricas, estrategia de pruebas y procedimiento de reporte de problemas con SLAs definidos.
+
+\textbf{Yael Aketzali Cervantes Castillo (UP240842):} Mi contribución abarcó las secciones 4.2 y 4.5. En la sección 4.2 realicé el análisis de calidad con ISO/IEC 25010, priorizando las ocho características de calidad de producto para Cal.com con justificación específica al contexto del proyecto. En la sección 4.5 elaboré la recomendación del modelo de madurez, argumentando la idoneidad de MoProSoft frente a CMMI e ISO/IEC 33000 para el contexto del equipo.
+
+\newpage
+\section*{Referencias}
+\begin{enumerate}
+    \item Galin, D. (2018). \textit{Software Quality: Concepts and Practice}. Wiley-IEEE Computer Society Press.
+    \item Pressman, R. \& Maxim, B. (2020). \textit{Software Engineering: A Practitioner's Approach} (9a ed.). McGraw-Hill.
+    \item IEEE Computer Society. (2014). \textit{IEEE Standard for Software Quality Assurance Processes} (IEEE Std 730-2014). IEEE. \url{https://doi.org/10.1109/IEEESTD.2014.6835311}
+    \item ISO/IEC. (2023). \textit{ISO/IEC 25010:2023 — Systems and software engineering — SQuaRE — Product quality model}. International Organization for Standardization.
+    \item ISO/IEC. (2016). \textit{ISO/IEC 25023 — Measurement of system and software product quality}. International Organization for Standardization.
+    \item Oktaba, H., \& Piattini, M. (2008). \textit{Software Process Improvement for Small and Medium Enterprises}. IGI Global.
+    \item NYCE. (2011). \textit{NMX-I-059-NYCE-2011: MoProSoft — Modelo de Procesos para la Industria del Software}. Secretaría de Economía de México.
+\end{enumerate}
+
+\end{document}

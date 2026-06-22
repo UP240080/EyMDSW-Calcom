@@ -1,0 +1,169 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{array}
+
+\geometry{margin=2.5cm}
+\setstretch{1.3}
+
+\begin{document}
+
+
+%------------------------------------------------
+% SECCIÓN 4.4
+%------------------------------------------------
+\section{4.4 Plan SQA IEEE 730}
+
+El aseguramiento de calidad de software (SQA) permite establecer procesos formales para verificar que un sistema cumpla con los requisitos funcionales y no funcionales definidos durante su desarrollo. En el caso de Cal.com, la aplicación de un plan SQA resulta especialmente importante debido a la complejidad de sus integraciones externas, la necesidad de mantener una experiencia de usuario estable y la importancia de garantizar la confiabilidad de los flujos de reserva.
+
+Con base en el estándar IEEE 730-2014, se definen las secciones principales del plan de aseguramiento de calidad aplicadas al contexto del proyecto integrador. Estas secciones establecen el alcance del plan, la organización del equipo, las prácticas y métricas de calidad, la estrategia de pruebas y el procedimiento de reporte de problemas, con el objetivo de asegurar un desarrollo consistente y controlado durante el cuatrimestre.
+
+\subsection{4.4.1 Purpose}
+
+El presente Plan de Aseguramiento de Calidad de Software (SQA) tiene como propósito establecer las actividades, responsabilidades, estándares y mecanismos de control aplicables al proyecto Cal.com durante el cuatrimestre. El alcance del plan comprende los módulos analizados por el equipo: gestión de disponibilidad, flujo de reserva de citas y panel administrativo.
+
+El plan busca garantizar que el software cumpla con los atributos de calidad priorizados previamente mediante ISO/IEC 25010, especialmente adecuación funcional, compatibilidad, usabilidad, fiabilidad y eficiencia de desempeño. Asimismo, define lineamientos para la verificación de entregables, revisión de código, ejecución de pruebas y seguimiento de defectos durante el ciclo de desarrollo.
+
+El alcance del aseguramiento de calidad cubre las siguientes actividades:
+
+\begin{itemize}
+    \item Revisión de requisitos funcionales y de calidad.
+    \item Verificación de cumplimiento de estándares de codificación.
+    \item Ejecución de pruebas funcionales y de integración.
+    \item Validación de compatibilidad con servicios externos.
+    \item Registro y seguimiento de defectos.
+    \item Evaluación continua de métricas de calidad.
+\end{itemize}
+
+El plan aplica a todos los integrantes del equipo y a los artefactos generados durante el proyecto, incluyendo código fuente, documentación, configuraciones y casos de prueba.
+
+\subsection{4.4.2 Management}
+
+El equipo de trabajo está conformado por cinco integrantes, cada uno con responsabilidades específicas relacionadas con el aseguramiento de calidad:
+
+\begin{itemize}
+    \item \textbf{Gabriela González Jaquez (UP240080) --- Líder del equipo:} coordina las actividades generales, supervisa el cumplimiento del cronograma y valida la entrega de artefactos.
+    
+    \item \textbf{Rebeca De La Cruz Hernández (UP240158) --- Developer:} implementa funcionalidades, corrige defectos detectados y participa en revisiones de código.
+    
+    \item \textbf{Diego Calva Álvarez (UP240133) --- Developer:} desarrolla módulos funcionales, realiza mantenimiento de código y apoya en pruebas técnicas.
+    
+    \item \textbf{Diana Laura Macias Gómez (UP260022) --- QA Tester:} diseña casos de prueba, ejecuta pruebas funcionales y documenta incidencias detectadas.
+    
+    \item \textbf{Yael Aketzali Cervantes Castillo (UP240842) --- Documentador:} mantiene actualizada la documentación técnica y verifica la consistencia de reportes y evidencias.
+\end{itemize}
+
+Las revisiones de avance se realizarán semanalmente mediante reuniones internas del equipo. Todas las incidencias críticas deberán notificarse inmediatamente al líder del proyecto y al responsable SQA para definir acciones correctivas.
+
+\subsection{4.4.3 Standards, practices, metrics}
+
+El proyecto utilizará estándares y prácticas auditables orientadas a mantener consistencia y trazabilidad en el desarrollo del software.
+
+\subsubsection*{Estándares aplicados}
+
+\begin{itemize}
+    \item IEEE 730-2014 para el aseguramiento de calidad.
+    \item ISO/IEC 25010 para la evaluación de atributos de calidad.
+    \item Convenciones de codificación TypeScript/Next.js.
+    \item Uso de GitHub para control de versiones y seguimiento de cambios.
+\end{itemize}
+
+\subsubsection*{Prácticas de calidad}
+
+\begin{itemize}
+    \item Revisión de código antes de integrar cambios al repositorio principal.
+    \item Uso obligatorio de commits descriptivos.
+    \item Validación automática mediante herramientas de linting y formateo.
+    \item Registro formal de defectos detectados durante pruebas.
+    \item Documentación continua de cambios relevantes.
+\end{itemize}
+
+\subsubsection*{Métricas}
+
+\begin{itemize}
+    \item Cobertura mínima de pruebas funcionales: 80\%.
+    \item Tiempo promedio de carga de páginas: menor a 2 segundos.
+    \item Disponibilidad del sistema durante pruebas: mayor o igual a 99\%.
+    \item Tasa máxima de defectos críticos abiertos: 0 al cierre del proyecto.
+    \item Tiempo máximo de resolución de errores críticos: 24 horas.
+\end{itemize}
+
+Las métricas serán verificadas semanalmente mediante revisión manual y herramientas integradas de desarrollo.
+
+\subsection{4.4.4 Test}
+
+La estrategia de pruebas del proyecto se enfocará en validar tanto funcionalidades principales como la integración con servicios externos utilizados por Cal.com.
+
+Las pruebas se dividirán en las siguientes categorías:
+
+\begin{itemize}
+    \item \textbf{Pruebas funcionales:} validación de flujos de reserva, configuración de horarios y administración de disponibilidad.
+    
+    \item \textbf{Pruebas de integración:} verificación de sincronización con servicios externos como Google Calendar y Outlook.
+    
+    \item \textbf{Pruebas de interfaz:} evaluación de usabilidad, navegación y accesibilidad en los módulos principales.
+    
+    \item \textbf{Pruebas de regresión:} ejecución posterior a cambios importantes para asegurar que funcionalidades previas continúen operando correctamente.
+    
+    \item \textbf{Pruebas de compatibilidad:} validación en distintos navegadores y dispositivos de escritorio.
+\end{itemize}
+
+Cada caso de prueba incluirá identificador, objetivo, pasos de ejecución, resultado esperado y evidencia de ejecución. Los resultados serán documentados y almacenados en el repositorio del proyecto.
+
+\subsection{4.4.5 Problem reporting}
+
+Todos los defectos identificados deberán registrarse en un sistema de seguimiento utilizando categorías de severidad y tiempos máximos de respuesta (SLA).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{6cm}|p{3cm}|}
+\hline
+\textbf{Severidad} & \textbf{Descripción} & \textbf{SLA máximo} \\
+\hline
+Crítica & El sistema no funciona o existe pérdida de datos. & 24 horas \\
+\hline
+Alta & Funcionalidad principal afectada sin solución alternativa. & 48 horas \\
+\hline
+Media & Error parcial con impacto moderado en el usuario. & 5 días \\
+\hline
+Baja & Problemas visuales o errores menores sin impacto funcional. & 10 días \\
+\hline
+\end{tabular}
+\caption{SLA de atención de defectos por severidad}
+\end{table}
+
+Cada incidencia deberá incluir:
+
+\begin{itemize}
+    \item Identificador único.
+    \item Descripción del problema.
+    \item Módulo afectado.
+    \item Severidad asignada.
+    \item Responsable asignado.
+    \item Estado de resolución.
+\end{itemize}
+
+El responsable SQA verificará que los defectos corregidos hayan sido resueltos antes de cerrar cada incidencia.
+
+%------------------------------------------------
+% REFERENCIAS 4.4
+%------------------------------------------------
+
+\section{Referencias}
+
+\begin{itemize}
+    \item IEEE Computer Society. (2014). \textit{IEEE Standard for Software Quality Assurance Processes (IEEE Std 730-2014)}. IEEE. https://doi.org/10.1109/IEEESTD.2014.6835311
+    
+    \item Pressman, R., \& Maxim, B. (2020). \textit{Software Engineering: A Practitioner's Approach} (9a ed.). McGraw-Hill.
+    
+    \item Galin, D. (2018). \textit{Software Quality: Concepts and Practice}. Wiley-IEEE Computer Society Press.
+    
+    \item ISO/IEC. (2023). \textit{ISO/IEC 25010:2023 — Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model}. International Organization for Standardization.
+\end{itemize}
+
+\end{document}

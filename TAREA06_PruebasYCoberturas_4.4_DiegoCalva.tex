@@ -1,0 +1,432 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\sloppy
+\renewcommand{\arraystretch}{1.25}
+
+\definecolor{codegray}{RGB}{245,245,245}
+\definecolor{codeframe}{RGB}{180,180,180}
+\definecolor{keywordcolor}{RGB}{120,40,130}
+\definecolor{commentcolor}{RGB}{45,110,60}
+\definecolor{stringcolor}{RGB}{170,70,30}
+
+\lstdefinestyle{codigo}{
+    backgroundcolor=\color{codegray},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor},
+    stringstyle=\color{stringcolor},
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    tabsize=4,
+    columns=fullflexible,
+    keepspaces=true,
+    captionpos=b
+}
+
+\lstset{style=codigo}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\newcommand{\evidencia}[3]{
+\begin{figure}[H]
+\centering
+\IfFileExists{#1}{
+    \includegraphics[width=0.95\textwidth]{#1}
+}{
+    \fbox{
+        \begin{minipage}[c][6cm][c]{0.90\textwidth}
+        \centering
+        \textbf{#2}
+        \end{minipage}
+    }
+}
+\caption{#3}
+\end{figure}
+}
+
+
+
+\begin{document}
+
+\section{Pruebas data-driven y conexión de cobertura con \texttt{pytest-cov}}
+
+\subsection{Objetivo de la implementación}
+
+Para reducir la duplicación de código y ejecutar un mismo flujo con distintos datos de entrada, se diseñó una prueba \textit{data-driven} para el módulo de autenticación de Cal.com. La implementación utiliza el decorador \texttt{@pytest.mark.parametrize} y obtiene los datos desde un archivo CSV externo.
+
+La separación entre la lógica de prueba y los datos permite ampliar los escenarios sin crear una función diferente para cada combinación. Este enfoque también mejora la mantenibilidad de la suite y facilita la identificación de fallas específicas.
+
+La cobertura se integró mediante \texttt{pytest-cov}, con salida en terminal, reporte HTML y archivo XML compatible con SonarQube.
+
+\subsection{Diseño de los casos de prueba}
+
+La prueba valida el inicio de sesión de Cal.com con datos válidos, inválidos y de frontera. Los escenarios definidos se muestran en la Tabla~\ref{tab:data-driven-login}.
+
+\begin{table}[H]
+\centering
+\caption{Casos data-driven para el inicio de sesión de Cal.com}
+\label{tab:data-driven-login}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{1.4cm}|X|X|}
+\hline
+\textbf{ID} & \textbf{Datos de entrada} & \textbf{Resultado esperado} \\
+\hline
+DD-01 & Correo y contraseña válidos & El usuario inicia sesión y abandona la ruta \texttt{/auth/login}. \\
+\hline
+DD-02 & Correo sin formato válido & El navegador muestra una validación del campo de correo. \\
+\hline
+DD-03 & Correo vacío & El formulario marca el campo de correo como obligatorio. \\
+\hline
+DD-04 & Contraseña vacía & El formulario marca el campo de contraseña como obligatorio. \\
+\hline
+DD-05 & Contraseña incorrecta & La aplicación muestra un error de autenticación y no inicia sesión. \\
+\hline
+\end{tabularx}
+\end{table}
+
+Las credenciales válidas se obtienen mediante las variables de entorno \texttt{CALCOM\_TEST\_EMAIL} y \texttt{CALCOM\_TEST\_PASSWORD}. Con ello, el repositorio puede conservar los casos de prueba sin exponer información sensible.
+
+\subsection{Archivo de datos CSV}
+
+Los datos de entrada se almacenaron en el archivo \texttt{tests/data/login\_cases.csv}. Cada fila representa una ejecución independiente de la misma prueba.
+
+\begin{lstlisting}[caption={Archivo CSV con los casos de prueba data-driven}]
+id,email,password,expected,description
+DD-01,ENV:CALCOM_TEST_EMAIL,ENV:CALCOM_TEST_PASSWORD,success,Credenciales validas
+DD-02,correo-sin-arroba,Password123!,validation,Formato de correo invalido
+DD-03,,Password123!,validation,Correo vacio
+DD-04,usuario@example.com,,validation,Contrasena vacia
+DD-05,usuario@example.com,ContrasenaIncorrecta123!,auth_error,Contrasena incorrecta
+\end{lstlisting}
+
+El prefijo \texttt{ENV:} identifica los valores que se recuperan desde variables de entorno. Esta estructura mantiene separados los datos sensibles y los datos versionados.
+
+\subsection{Implementación de la prueba parametrizada}
+
+La función \texttt{load\_login\_cases()} abre el archivo CSV, transforma cada fila en un diccionario y sustituye los valores con prefijo \texttt{ENV:} por el contenido de las variables de entorno correspondientes.
+
+\begin{lstlisting}[language=Python,caption={Prueba data-driven con \texttt{@pytest.mark.parametrize}}]
+from __future__ import annotations
+
+import csv
+import os
+from pathlib import Path
+
+import pytest
+
+from pages.login_page import LoginPage
+
+DATA_FILE = Path(__file__).parent / "data" / "login_cases.csv"
+
+
+def _resolve_value(value: str) -> str:
+    if value.startswith("ENV:"):
+        return os.getenv(value.removeprefix("ENV:"), "")
+    return value
+
+
+def load_login_cases() -> list[dict[str, str]]:
+    with DATA_FILE.open(encoding="utf-8", newline="") as file:
+        cases = list(csv.DictReader(file))
+
+    for case in cases:
+        case["email"] = _resolve_value(case["email"])
+        case["password"] = _resolve_value(case["password"])
+    return cases
+
+
+@pytest.mark.e2e
+@pytest.mark.parametrize(
+    "case",
+    load_login_cases(),
+    ids=lambda case: case["id"],
+)
+def test_login_data_driven(
+    driver,
+    base_url: str,
+    case: dict[str, str],
+) -> None:
+    if case["id"] == "DD-01" and (
+        not case["email"] or not case["password"]
+    ):
+        pytest.skip(
+            "Credenciales de prueba no disponibles "
+            "en las variables de entorno."
+        )
+
+    login_page = LoginPage(driver, base_url)
+    login_page.open()
+    login_page.submit_credentials(
+        case["email"],
+        case["password"],
+    )
+
+    result = login_page.wait_for_result()
+
+    assert result.status == case["expected"], (
+        f"Caso {case['id']} ({case['description']}): "
+        f"se esperaba '{case['expected']}', "
+        f"pero se obtuvo '{result.status}'. "
+        f"Detalle: {result.message}"
+    )
+\end{lstlisting}
+
+Aunque existe una sola función, pytest registra cada fila del archivo CSV como una ejecución separada. Los casos \texttt{DD-01}, \texttt{DD-02}, \texttt{DD-03}, \texttt{DD-04} y \texttt{DD-05} aparecen individualmente en la terminal y en el reporte HTML.
+
+El argumento \texttt{ids=lambda case: case["id"]} asigna a cada ejecución el identificador definido en el CSV. Esto mejora la lectura de los resultados y permite localizar con rapidez el conjunto de datos relacionado con una falla.
+
+\evidencia
+{imagenes/salida_pytest.png}
+{Evidencia de ejecución de los casos data-driven en pytest}
+{Salida de pytest con la ejecución individual de los casos DD-01 a DD-05.}
+
+\subsection{Integración con Page Object Model}
+
+La prueba se apoya en el Page Object \texttt{LoginPage}. Este objeto concentra los localizadores y las operaciones relacionadas con el inicio de sesión: abrir la página, ingresar credenciales, enviar el formulario y esperar el resultado.
+
+\begin{lstlisting}[language=Python,caption={Fragmento principal del Page Object \texttt{LoginPage}}]
+from dataclasses import dataclass
+
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+@dataclass(frozen=True)
+class LoginResult:
+    status: str
+    message: str = ""
+
+
+class LoginPage:
+    EMAIL = (
+        By.CSS_SELECTOR,
+        'input[name="email"], input[type="email"]',
+    )
+    PASSWORD = (
+        By.CSS_SELECTOR,
+        'input[name="password"], input[type="password"]',
+    )
+    SUBMIT = (By.CSS_SELECTOR, 'button[type="submit"]')
+    ERROR = (
+        By.CSS_SELECTOR,
+        '[role="alert"], [data-testid="toast-error"], '
+        '[data-testid*="error"]',
+    )
+
+    def __init__(self, driver, base_url: str, timeout: int = 12):
+        self.driver = driver
+        self.base_url = base_url.rstrip("/")
+        self.wait = WebDriverWait(driver, timeout)
+
+    def open(self) -> None:
+        self.driver.get(f"{self.base_url}/auth/login")
+        self.wait.until(
+            EC.visibility_of_element_located(self.EMAIL)
+        )
+
+    def submit_credentials(self, email: str, password: str) -> None:
+        email_input = self.wait.until(
+            EC.visibility_of_element_located(self.EMAIL)
+        )
+        email_input.clear()
+        email_input.send_keys(email)
+
+        password_fields = self.driver.find_elements(*self.PASSWORD)
+        if not password_fields:
+            self.wait.until(
+                EC.element_to_be_clickable(self.SUBMIT)
+            ).click()
+            password_input = self.wait.until(
+                EC.visibility_of_element_located(self.PASSWORD)
+            )
+        else:
+            password_input = password_fields[0]
+
+        password_input.clear()
+        password_input.send_keys(password)
+        self.wait.until(
+            EC.element_to_be_clickable(self.SUBMIT)
+        ).click()
+\end{lstlisting}
+
+La sincronización con la interfaz se realizó mediante esperas explícitas con \texttt{WebDriverWait}. El uso de condiciones explícitas evita depender de pausas fijas y reduce la inestabilidad de las pruebas.
+
+Los localizadores consideran atributos comunes del formulario de autenticación, como \texttt{name}, \texttt{type}, \texttt{role} y \texttt{data-testid}.
+
+\subsection{Configuración de pytest y pytest-cov}
+
+La suite utiliza Selenium, pytest, pytest-cov y pytest-html. Las dependencias se instalaron con el siguiente comando:
+
+\begin{lstlisting}[caption={Instalación de dependencias para la suite}]
+pip install selenium pytest pytest-cov pytest-html
+\end{lstlisting}
+
+La configuración de pytest se almacenó en el archivo \texttt{pytest.ini}:
+
+\begin{lstlisting}[caption={Configuración del archivo \texttt{pytest.ini}}]
+[pytest]
+testpaths = tests
+python_files = test_*.py
+
+markers =
+    e2e: pruebas de extremo a extremo con navegador
+
+addopts =
+    -v
+    --strict-markers
+    --html=reports/reporte_pytest.html
+    --self-contained-html
+    --cov=pages
+    --cov-branch
+    --cov-report=term-missing
+    --cov-report=xml:reports/coverage.xml
+    --cov-report=html:reports/htmlcov
+\end{lstlisting}
+
+Esta configuración genera una salida detallada en terminal, un reporte HTML de la ejecución, un reporte HTML de cobertura y un archivo XML compatible con SonarQube.
+
+La ejecución principal queda reducida al comando siguiente:
+
+\begin{lstlisting}[caption={Ejecución mediante la configuración de \texttt{pytest.ini}}]
+pytest
+\end{lstlisting}
+
+La misma ejecución puede expresarse de forma completa mediante los parámetros configurados:
+
+\begin{lstlisting}[caption={Ejecución de pruebas y generación de reportes}]
+pytest -v \
+  --cov=pages \
+  --cov-branch \
+  --cov-report=term-missing \
+  --cov-report=xml:reports/coverage.xml \
+  --cov-report=html:reports/htmlcov \
+  --html=reports/reporte_pytest.html \
+  --self-contained-html
+\end{lstlisting}
+
+\subsection{Configuración del entorno de prueba}
+
+La instancia local y las credenciales de prueba se administran mediante variables de entorno. En PowerShell se utilizó la siguiente configuración:
+
+\begin{lstlisting}[caption={Variables de entorno en PowerShell}]
+$env:CALCOM_BASE_URL="http://localhost:3000"
+$env:CALCOM_TEST_EMAIL="usuario_prueba@ejemplo.com"
+$env:CALCOM_TEST_PASSWORD="ContrasenaDePrueba123!"
+pytest
+\end{lstlisting}
+
+La configuración equivalente en Linux o macOS es la siguiente:
+
+\begin{lstlisting}[caption={Variables de entorno en Linux o macOS}]
+export CALCOM_BASE_URL="http://localhost:3000"
+export CALCOM_TEST_EMAIL="usuario_prueba@ejemplo.com"
+export CALCOM_TEST_PASSWORD="ContrasenaDePrueba123!"
+pytest
+\end{lstlisting}
+
+\subsection{Reportes generados}
+
+La ejecución genera la siguiente estructura de archivos:
+
+\begin{lstlisting}[caption={Archivos generados por pytest}]
+reports/
+|-- coverage.xml
+|-- reporte_pytest.html
+`-- htmlcov/
+    `-- index.html
+\end{lstlisting}
+
+El archivo \texttt{reporte\_pytest.html} contiene el resultado de cada caso de prueba. El archivo \texttt{htmlcov/index.html} presenta la cobertura por archivo y por línea. El archivo \texttt{coverage.xml} contiene la información de cobertura utilizada por SonarQube.
+
+\evidencia
+{imagenes/reporte_pytest_html.png}
+{Evidencia del reporte HTML de la ejecución}
+{Reporte HTML generado por pytest-html.}
+
+\evidencia
+{imagenes/reporte_cobertura_html.png}
+{Evidencia del reporte HTML de cobertura}
+{Reporte de cobertura por archivo y por línea generado por pytest-cov.}
+
+\subsection{Conexión de la cobertura con SonarQube}
+
+La cobertura XML se incorporó al análisis mediante la propiedad \texttt{sonar.python.coverage.reportPaths} del archivo \texttt{sonar-project.properties}:
+
+\begin{lstlisting}[caption={Configuración de cobertura Python en SonarQube}]
+sonar.python.coverage.reportPaths=selenium_tests/reports/coverage.xml
+\end{lstlisting}
+
+Esta ruta vincula el análisis de SonarQube con el reporte producido por pytest-cov dentro de la carpeta de pruebas Selenium.
+
+\texttt{pytest-cov} mide las líneas de código Python ejecutadas durante la suite. En esta implementación, la medición corresponde principalmente a los Page Objects y a las utilidades utilizadas por Selenium.
+
+Cal.com está desarrollado principalmente con Next.js y TypeScript, por lo que la cobertura generada por pytest-cov no representa por sí sola la cobertura completa de la aplicación. La cobertura del código JavaScript y TypeScript se incorpora mediante un reporte LCOV:
+
+\begin{lstlisting}[caption={Configuración de cobertura JavaScript y TypeScript en SonarQube}]
+sonar.javascript.lcov.reportPaths=coverage/lcov.info
+\end{lstlisting}
+
+De esta manera, SonarQube puede integrar la cobertura XML del código Python de automatización y la cobertura LCOV del código principal de Cal.com sin confundir ambas mediciones.
+
+\evidencia
+{imagenes/sonarqube_cobertura.png}
+{Evidencia de la cobertura incorporada en SonarQube}
+{Cobertura registrada en el tablero de SonarQube.}
+
+\subsection{Interpretación de la implementación}
+
+El diseño data-driven permite verificar múltiples combinaciones de entrada sin duplicar funciones. Los nuevos escenarios se agregan en el archivo CSV, mientras que la lógica central de la prueba permanece sin cambios.
+
+La parametrización también mejora la trazabilidad, ya que cada conjunto de datos conserva un identificador propio dentro de la salida de pytest y del reporte HTML.
+
+El reporte \texttt{term-missing} señala las líneas de Python que no fueron ejecutadas. El reporte HTML facilita la revisión visual por archivo, mientras que el archivo \texttt{coverage.xml} permite trasladar la métrica a SonarQube.
+
+La separación entre la cobertura de Python y la cobertura de TypeScript evita interpretar la ejecución de los Page Objects como si representara la totalidad del código de Cal.com.
+
+\subsection{Conclusión}
+
+La implementación integró una prueba data-driven mediante \texttt{@pytest.mark.parametrize}, datos externos en formato CSV y variables de entorno para proteger las credenciales. La estructura permite ejecutar casos válidos, inválidos y de frontera desde una sola función de prueba.
+
+La integración con pytest-cov genera resultados en terminal, un reporte HTML y un archivo XML de cobertura. Este último se conecta con SonarQube mediante \texttt{sonar.python.coverage.reportPaths}.
+
+El enfoque mejora la mantenibilidad, la trazabilidad y la integración de la suite con procesos posteriores de análisis de calidad e integración continua.
+
+\section*{Referencias utilizadas en esta sección}
+\addcontentsline{toc}{section}{Referencias utilizadas en esta sección}
+
+Aniche, M. (2022). \textit{Effective software testing: A developer's guide}. Manning.
+
+García, B. (2022). \textit{Hands-on Selenium WebDriver with Java}. O'Reilly Media.
+
+pytest. (s. f.). \textit{How to parametrize fixtures and test functions}. Documentación oficial de pytest.
+
+pytest-cov. (s. f.). \textit{Coverage reporting with pytest-cov}. Documentación oficial de pytest-cov.
+
+SonarSource. (s. f.). \textit{Python test coverage}. Documentación oficial de SonarQube.
+
+\end{document}
