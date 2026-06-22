@@ -1,0 +1,1369 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\renewcommand*{\familydefault}{\sfdefault}
+\usepackage[]{geometry}
+\usepackage{setspace}
+\usepackage{xcolor}
+\definecolor{azul}{RGB}{0, 160, 255}
+\definecolor{azul2}{RGB}{7, 74, 163}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\pagenumbering{arabic}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}        % bloques de código
+\usepackage{hyperref}        % hipervínculos (opcional)
+\usepackage{caption}         % personalizar pies de figura/tabla
+\usepackage{subcaption} 
+% ── Configuración de listings────────────────────────
+ \definecolor{codebg}{RGB}{15,23,42}
+ \definecolor{codefg}{RGB}{226,232,240}
+ \definecolor{codecomment}{RGB}{100,116,139}
+ \definecolor{codekeyword}{RGB}{96,165,250}
+ \definecolor{codestring}{RGB}{74,222,128}
+
+ \lstdefinestyle{pythonstyle}{
+   backgroundcolor=\color{codebg},
+   basicstyle=\ttfamily\footnotesize\color{codefg},
+   commentstyle=\color{codecomment}\itshape,
+   keywordstyle=\color{codekeyword}\bfseries,
+   stringstyle=\color{codestring},
+   breakatwhitespace=false,
+   breaklines=true,
+   keepspaces=true,
+   numbers=left,
+   numberstyle=\tiny\color{codecomment},
+   numbersep=8pt,
+   showspaces=false,
+   showstringspaces=false,
+   showtabs=false,
+   tabsize=4,
+   frame=single,
+   rulecolor=\color{codecomment},
+   captionpos=b,
+   language=Python
+}
+\lstset{style=pythonstyle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\sloppy
+\renewcommand{\arraystretch}{1.25}
+
+\definecolor{codegray}{RGB}{245,245,245}
+\definecolor{codeframe}{RGB}{180,180,180}
+\definecolor{keywordcolor}{RGB}{120,40,130}
+\definecolor{commentcolor}{RGB}{45,110,60}
+\definecolor{stringcolor}{RGB}{170,70,30}
+
+\lstdefinestyle{codigo}{
+    backgroundcolor=\color{codegray},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor},
+    stringstyle=\color{stringcolor},
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    tabsize=4,
+    columns=fullflexible,
+    keepspaces=true,
+    captionpos=b
+}
+\newcommand{\evidencia}[3]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{#1}
+    \caption{#2}
+    \label{fig:#1}
+    \nopagebreak\small #3 % Para mostrar el tercer argumento como descripción debajo
+  \end{figure}
+}
+
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2 cm, right=2 cm, top=2 cm, bottom=2 cm}
+    \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{-45} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \fill[azul] (12, -27) rectangle(15, 4);
+    \end{tikzpicture}
+{\huge \textsc{\textbf{Automatización de pruebas y análisis
+de calidad de Cal.com}}}\\ [6pt]
+    {\Large \textsc{Curso y Grupo: Estándares y Métricas para el Desarrollo de Software, TII05D}}\\[2pt]
+    {\Large \textsc{Integrantes:\\Diego Calva \\ Gabriela González\\ Diana Macias\\ Rebeca De La Cruz\\ Yael Cervantes \\https://github.com/UP240080/EyMDSW-Calcom.git}} \\ [2pt]
+    \begin{minipage}{3 cm}
+    \hspace{0.3 cm} \rotatebox{90}{\Large \textsc{{\color{white}{Ing en}} Tecnologías de la Información e Innovación Digital}}
+        
+    \end{minipage} \hfill
+    \begin{minipage}{4 cm}
+        \begin{spacing}{5}
+        {\color{white} \fontsize{60}{70} \selectfont \bfseries 2\\ 0\\ 2\\ 6} 
+        \end{spacing}
+    \end{minipage}
+    \vfill
+    \begin{flushleft}
+      \color{white} { {\large \textsc{Universidad Politécnica\\ de Aguascalientes\\ 21/06/2026}} \\ [10pt]
+
+        }
+    \end{flushleft}
+\end{titlepage}
+
+\begin{titlepage}
+  \Large{\tableofcontents}
+ \begin{tikzpicture}[overlay, fill opacity= 0.7]
+        \rotatebox{60} {\fill[azul2] (12, -23) rectangle(21, 20);}
+        \rotatebox{-85} {\fill[azul2] (12, -23) rectangle(21, 20);}
+    \end{tikzpicture}
+  
+\end{titlepage}
+
+\newpage
+\section{Introducción}
+El presente trabajo documenta la investigación comparativa y la
+implementación práctica de herramientas de automatización de pruebas
+y de análisis estático de código, aplicadas al proyecto integrador
+del equipo: \textbf{Cal.com}, una plataforma open-source para la
+programación de citas y gestión de disponibilidad, construida sobre
+Next.js, TypeScript y Prisma, con PostgreSQL como motor de base de
+datos. El repositorio oficial sobre el cual se trabaja se encuentra
+disponible en \url{https://github.com/UP240080/EyMDSW-Calcom}.
+
+A lo largo del cuatrimestre el equipo ha analizado tres
+funcionalidades críticas de la plataforma --gestión de
+disponibilidad, flujo de reserva de citas y panel administrativo--
+bajo los atributos de calidad de usabilidad, compatibilidad y
+accesibilidad. La presente tarea complementa ese análisis al
+incorporar dos frentes adicionales: por un lado, una investigación
+sobre el estado del arte de los frameworks de pruebas end-to-end
+(E2E) y de las herramientas de análisis estático de código; por otro
+lado, la aplicación práctica de Selenium con pytest y de SonarQube
+directamente sobre el código del proyecto.
+Se investigarán al menos tres frameworks de automatización E2E
+(Selenium, Cypress y Playwright) y al menos tres herramientas de
+análisis estático (SonarQube, ESLint y Semgrep), comparando sus
+características técnicas para justificar su pertinencia frente al
+stack tecnológico de Cal.com. Posteriormente, el equipo implementará
+una suite de pruebas E2E con Page Object Model sobre un módulo real
+del flujo de reserva, y ejecutará un análisis estático con
+SonarQube para identificar issues de calidad, los cuales serán
+priorizados en un plan de remediación de deuda técnica. Finalmente,
+se documentará la integración de ambas prácticas en un pipeline de
+integración continua.
+
+
+% ============================================================
+% DESARROLLO
+% ============================================================
+
+\section{Desarrollo}
+
+Esta sección integra los seis componentes solicitados por la tarea:
+investigación de frameworks E2E, investigación de herramientas de
+análisis estático, implementación de pruebas con Selenium,
+análisis estático con SonarQube, integración en CI y un plan de
+remediación de deuda técnica. Las dos primeras subsecciones
+(investigación) sientan las bases conceptuales que justifican las
+decisiones tomadas en las subsecciones prácticas que les siguen.
+
+% ============================================================
+% 4.1
+% ============================================================
+
+\subsection{Investigación: frameworks de automatización E2E}
+
+Las pruebas end-to-end (E2E) validan el comportamiento de una
+aplicación desde la perspectiva del usuario final, simulando
+interacciones reales sobre la interfaz en un navegador. Jorgensen
+(2022) ubica este tipo de pruebas en el nivel más alto de la
+pirámide de pruebas, ya que ejercitan el sistema integrado de punta
+a punta, a diferencia de las pruebas unitarias que aíslan
+componentes individuales. Para el caso de Cal.com, cuyo flujo de
+reserva de citas involucra múltiples pasos secuenciales
+(selección de tipo de evento, elección de fecha y hora, captura de
+datos y confirmación), este tipo de prueba resulta indispensable
+para validar la experiencia completa del usuario.
+
+Se compararon tres de los frameworks más utilizados actualmente en
+la industria: \textbf{Selenium}, \textbf{Cypress} y
+\textbf{Playwright}.
+Selenium es el framework más longevo de los tres y opera mediante el
+protocolo WebDriver, lo que le permite comunicarse con prácticamente
+cualquier navegador a través de su respectivo driver.
+Su madurez se traduce en una comunidad extensa y en soporte para
+múltiples lenguajes de programación, pero también en una curva de
+aprendizaje más pronunciada, ya que el manejo de esperas y la
+gestión de drivers recae casi por completo en quien escribe la
+prueba.
+Cypress, en cambio, se ejecuta dentro del mismo bucle de eventos del
+navegador, lo que le da acceso directo al DOM y a las peticiones de
+red de la aplicación bajo prueba. Esta arquitectura simplifica
+considerablemente el manejo de esperas, ya que Cypress reintenta
+automáticamente las aserciones hasta que se cumplen o se agota un
+tiempo límite. Su principal limitación es que está
+acotado al ecosistema JavaScript/TypeScript y, históricamente, a
+navegadores basados en Chromium, Firefox y Edge.
+Playwright, desarrollado por Microsoft, combina varias de las
+ventajas de los dos anteriores: ofrece soporte multinavegador real
+(Chromium, Firefox y WebKit) desde un único motor de automatización,
+esperas automáticas integradas (auto-waiting) y soporte para
+múltiples lenguajes, incluyendo TypeScript, Python, Java y C\#. Su
+arquitectura basada en contextos de navegador aislados le permite
+ejecutar pruebas en paralelo con mayor velocidad que las
+arquitecturas tradicionales basadas en WebDriver (Khorikov, 2020,
+respecto a la importancia de la velocidad de ejecución para
+mantener suites de prueba sostenibles).
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Criterio} & \textbf{Selenium} & \textbf{Cypress} & \textbf{Playwright} \\
+\midrule
+Lenguajes soportados & Java, Python, C\#, JS/TS, Ruby, Kotlin & JavaScript / TypeScript & JS/TS, Python, Java, C\# \\
+Curva de aprendizaje & Alta (gestión manual de drivers y esperas) & Media (API declarativa, propia de JS) & Media-baja (auto-wait, API moderna) \\
+Velocidad de ejecución & Media (overhead del protocolo WebDriver) & Alta (ejecución dentro del navegador) & Alta (contextos aislados, ejecución paralela nativa) \\
+Manejo de esperas & Manual (\texttt{WebDriverWait}) & Automático (retry-ability integrado) & Automático (auto-waiting integrado) \\
+Soporte de navegadores & Chrome, Firefox, Edge, Safari (vía drivers) & Chrome, Edge, Firefox (Safari experimental) & Chromium, Firefox y WebKit nativos \\
+Comunidad & Muy amplia, desde 2004 & Amplia, en crecimiento desde 2017 & En crecimiento acelerado, respaldo de Microsoft \\
+Licencia & Apache 2.0 (open source) & MIT (núcleo open source; Cypress Cloud es de pago) & Apache 2.0 (open source) \\
+\bottomrule
+\end{tabular}%
+}
+\caption{Comparativa de frameworks de automatización E2E. Fuente: elaboración propia con base en García (2022), Aniche (2022) y documentación oficial (selenium.dev, docs.cypress.io, playwright.dev).}
+\label{tab:e2e}
+\end{table}
+
+\textbf{Recomendación.} Dado que Cal.com es una aplicación construida
+íntegramente en TypeScript sobre Next.js, Playwright sería la
+opción más adecuada para un entorno de producción: ofrece soporte
+nativo del lenguaje del proyecto, cobertura multinavegador real y
+una velocidad de ejecución superior, factores relevantes para una
+aplicación con flujos críticos como la reserva de citas. Sin
+embargo, y tal como lo permite el lineamiento de la tarea, la
+implementación práctica de este trabajo (sección 4.3) se realiza con
+\textbf{Selenium + pytest}, por ser la herramienta trabajada en las
+sesiones de clase y por contar con un ecosistema robusto de
+documentación y patrones (como Page Object Model) ampliamente
+documentados por García (2022). Esta decisión no contradice la
+recomendación anterior, sino que distingue entre la herramienta
+técnicamente más idónea para el stack del proyecto y la herramienta
+pedagógicamente adecuada para los objetivos de esta unidad.
+
+
+% ============================================================
+% 4.2
+% ============================================================
+
+\subsection{Investigación: análisis estático de código}
+
+El análisis estático de código examina el código fuente sin
+ejecutarlo, identificando patrones que indican posibles defectos,
+vulnerabilidades de seguridad, código duplicado o violaciones a
+buenas prácticas de diseño (Khorikov, 2020). Esto lo distingue del
+análisis dinámico --como las pruebas E2E descritas en la sección
+anterior-- que observa el comportamiento real del sistema durante su
+ejecución y, por lo tanto, solo puede detectar defectos en las rutas
+de código que efectivamente se ejercitan durante la prueba. El
+análisis estático, en cambio, recorre el cien por ciento del código
+fuente, lo que le permite detectar problemas de forma temprana, antes
+de que el sistema esté siquiera en ejecución, aunque con el costo de
+generar en ocasiones falsos positivos.
+
+Se compararon tres herramientas de análisis estático relevantes para
+el stack de Cal.com: \textbf{SonarQube}, \textbf{ESLint} y
+\textbf{Semgrep}.
+
+SonarQube es una plataforma integral que evalúa cinco dimensiones de
+calidad (confiabilidad, seguridad, mantenibilidad, cobertura y
+duplicación) y soporta de forma nativa más de 30 lenguajes,
+incluyendo TypeScript y JavaScript. Su fortaleza principal es ofrecer
+una visión consolidada del estado de calidad de todo un repositorio,
+junto con un mecanismo de \emph{Quality Gate} que puede bloquear
+integraciones que no cumplan los umbrales definidos.
+ESLint, por su parte, es un linter especializado únicamente en
+JavaScript y TypeScript, enfocado en detectar errores de sintaxis,
+problemas de estilo y antipatrones específicos del lenguaje en
+tiempo de escritura, generalmente integrado directamente en el editor
+o como parte de los hooks de pre-commit. A diferencia de SonarQube,
+no ofrece una visión histórica ni un tablero centralizado de
+calidad, pero su retroalimentación es prácticamente inmediata para
+quien programa.
+Semgrep se distingue por su enfoque basado en reglas semánticas
+ligeras, definidas en patrones legibles similares al propio código,
+lo que facilita escribir reglas personalizadas para detectar
+vulnerabilidades de seguridad específicas (por ejemplo, uso indebido
+de consultas SQL sin parametrizar) de forma más ágil que con motores
+de análisis más pesados (Aniche, 2022, respecto a la importancia de
+detectar errores comunes de forma temprana y automatizada).
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+\textbf{Criterio} & \textbf{SonarQube} & \textbf{ESLint} & \textbf{Semgrep} \\
+\midrule
+Tipo de defectos detectados & Bugs, vulnerabilidades, code smells, duplicación, hotspots de seguridad & Errores de sintaxis, antipatrones de JS/TS, estilo de código & Vulnerabilidades de seguridad y patrones personalizados \\
+Lenguajes soportados & +30 lenguajes (incluye TS/JS) & JavaScript / TypeScript (vía plugins) & +20 lenguajes, reglas personalizables \\
+Integración en flujo de trabajo & Servidor centralizado / CI, Quality Gate & Editor / pre-commit / CI & CLI / CI, reglas como código \\
+Visión histórica del proyecto & Sí (tablero con tendencias) & No & Limitada \\
+Licencia & Community Edition gratuita; ediciones avanzadas de pago & MIT (open source) & Open source (núcleo); Semgrep Cloud de pago \\
+\bottomrule
+\end{tabular}%
+}
+\caption{Comparativa de herramientas de análisis estático de código. Fuente: elaboración propia con base en Khorikov (2020), Aniche (2022) y documentación oficial (docs.sonarsource.com, eslint.org, semgrep.dev).}
+\label{tab:static}
+\end{table}
+
+\textbf{Justificación para el stack de Cal.com.} SonarQube resulta
+adecuado para este proyecto porque analiza de forma nativa
+TypeScript y JavaScript --los lenguajes en los que está escrito
+prácticamente todo el código de Cal.com--, y porque su mecanismo de
+\emph{Quality Gate} permite establecer un criterio objetivo y
+automatizable sobre el cual el equipo puede decidir si un cambio es
+apto para integrarse al proyecto, algo especialmente valioso dado el
+volumen y la complejidad del repositorio descritos como riesgo en la
+elección del caso de estudio. Además, SonarQube puede consumir
+directamente el archivo \texttt{coverage.xml} generado por
+\texttt{pytest-cov}, lo que permite vincular en un mismo tablero la
+cobertura producida por la suite de pruebas E2E (sección 4.3) con el
+resto de las métricas estáticas del código (sección 4.4). Por estas
+razones, se selecciona SonarQube como herramienta principal de
+análisis estático para la práctica, complementando su uso, de ser
+necesario, con las reglas de ESLint ya presentes en la configuración
+original del proyecto Cal.com.
+
+\subsection{Implementación de pruebas E2E con Selenium}
+\label{subsec:selenium}
+
+Esta sección documenta la implementación práctica de una suite de pruebas
+\textit{end-to-end} (E2E) sobre el proyecto integrador \textbf{Cal.com},
+aplicando el patrón \textit{Page Object Model} (POM) con Selenium~4 y pytest.
+La decisión de emplear Selenium obedece a los lineamientos de la unidad,
+complementando la recomendación técnica de Playwright presentada en la
+sección~4.1: mientras Playwright sería la herramienta óptima para el stack
+TypeScript de Cal.com, Selenium con pytest representa la herramienta
+pedagógicamente establecida en clase, con amplia documentación en el patrón
+POM 
+
+% ------------------------------------------------------------
+\subsubsection{Estructura del proyecto de pruebas}
+% ------------------------------------------------------------
+
+El proyecto de pruebas se organiza siguiendo la separación de
+responsabilidades propuesta por \textcite{Garcia2022}: los
+\textit{Page Objects} residen en \texttt{pages/}, las pruebas en
+\texttt{tests/}, la configuración global de fixtures en
+\texttt{conftest.py} y los reportes generados en \texttt{reports/}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.15\linewidth]{img/Captura de pantalla 2026-06-21 183840.png}
+  \caption{Estructura de directorios del proyecto de pruebas E2E de Cal.com.}
+  \label{fig:estructura-proyecto}
+\end{figure}
+
+La Figura~\ref{fig:estructura-proyecto} muestra la organización del
+proyecto. El Cuadro~\ref{tab:archivos-suite} describe el rol de cada
+archivo en la suite.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Archivos del proyecto de pruebas y su responsabilidad.}
+  \label{tab:archivos-suite}
+  \begin{tabular}{lp{9cm}}
+    \toprule
+    \textbf{Archivo} & \textbf{Responsabilidad} \\
+    \midrule
+    \texttt{conftest.py}
+      & Fixture global de WebDriver (\texttt{scope=\allowbreak{}function}).
+        Crea y destruye una instancia de Chrome por cada prueba, garantizando
+        aislamiento total de sesión. Admite el argumento \texttt{-{}-headless}
+        para ejecución en CI sin interfaz gráfica. \\
+    \texttt{pytest.ini}
+      & Configuración global de pytest: rutas de pruebas, marcadores
+        personalizados, opciones predeterminadas (\texttt{-v},
+        \texttt{-{}-tb=short}) y formato de log. \\
+    \texttt{requirements.txt}
+      & Dependencias fijadas: \texttt{selenium==4.21.0},
+        \texttt{pytest==8.2.2}, \texttt{pytest-html==4.1.1},
+        \texttt{pytest-cov==5.0.0}. \\
+    \texttt{pages/login\_page.py}
+      & Page Object del módulo de autenticación (\texttt{/auth/login}). \\
+    \texttt{pages/booking\_page.py}
+      & Page Object del flujo de reserva de citas. \\
+    \texttt{tests/test\_login.py}
+      & Suite de 5 pruebas unitarias + 1 prueba data-driven (7 casos). \\
+    \texttt{tests/test\_booking.py}
+      & Suite de pruebas del flujo de booking con manejo de skip graceful. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\subsubsection{Page Objects implementados}
+% ------------------------------------------------------------
+
+Se diseñaron dos \textit{Page Objects} que encapsulan los localizadores
+y métodos de negocio de los módulos más críticos de Cal.com
+\parencite{Aniche2022}.
+
+\paragraph{LoginPage (\texttt{pages/login\_page.py}).}
+Centraliza la interacción con la pantalla de inicio de sesión de Cal.com.
+Expone métodos de negocio de alto nivel (\texttt{hacer\_login},
+\texttt{login\_exitoso}, \texttt{obtener\_mensaje\_error}) en lugar de
+localizadores crudos, respetando el principio de encapsulación del patrón POM.
+Todas las esperas se implementan con \texttt{WebDriverWait} y
+\texttt{expected\_conditions}; el uso de \texttt{time.sleep} está
+explícitamente prohibido en la suite \parencite{Garcia2022}.
+
+El Listado~\ref{lst:login-page} muestra los localizadores y el método
+compuesto \texttt{hacer\_login}:
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  caption={Fragmento de \texttt{pages/login\_page.py}: localizadores y método \texttt{hacer\_login}.},
+  label={lst:login-page}
+]
+# Localizadores centralizados (By, valor)
+_CAMPO_EMAIL    = (By.ID, "email")
+_CAMPO_PASSWORD = (By.ID, "password")
+_BOTON_INGRESAR = (By.CSS_SELECTOR, "button[type='submit']")
+_MENSAJE_ERROR  = (By.CSS_SELECTOR,
+    "[data-testid='login-error'], .text-red-700, .text-error")
+_HEADER_DASHBOARD = (By.CSS_SELECTOR,
+    "[data-testid='dashboard'], h3.text-emphasis, nav[aria-label]")
+
+def hacer_login(self, email: str, password: str) -> "LoginPage":
+    """Metodo compuesto: llena el formulario y envia en un solo paso."""
+    self.ingresar_email(email)
+    self.ingresar_password(password)
+    self.click_ingresar()
+    return self
+
+def _esperar_elemento_visible(self, localizador: tuple):
+    """Espera hasta que el elemento sea visible (WebDriverWait)."""
+    return self._wait.until(
+        EC.visibility_of_element_located(localizador),
+        message=f"Elemento no visible: {localizador}",
+    )
+\end{lstlisting}
+
+\paragraph{BookingPage (\texttt{pages/booking\_page.py}).}
+Cubre el flujo completo de reserva de citas: selección de tipo de evento,
+elección de fecha en el calendario, selección de horario y llenado del
+formulario de confirmación. El método \texttt{abrir\_evento\_directo}
+permite saltar al paso del calendario sin pasar por el perfil del usuario,
+lo que acorta el tiempo de ejecución de las pruebas relevantes.
+
+El Listado~\ref{lst:booking-page} muestra los localizadores del calendario
+y el método de selección de fecha:
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  caption={Fragmento de \texttt{pages/booking\_page.py}: localizadores del calendario y selección de fecha.},
+  label={lst:booking-page}
+]
+_DIAS_DISPONIBLES  = (By.CSS_SELECTOR,
+    "button[data-testid='day']:not([disabled])")
+_HORAS_DISPONIBLES = (By.CSS_SELECTOR,
+    "button[data-testid='time']")
+
+def seleccionar_primera_fecha_disponible(self) -> "BookingPage":
+    """Selecciona el primer dia habilitado del calendario."""
+    dias = self.obtener_dias_disponibles()
+    if not dias:
+        raise AssertionError(
+            "No se encontraron fechas disponibles en el calendario.")
+    dias[0].click()
+    self._esperar_elemento_visible(self._HORAS_DISPONIBLES)
+    return self
+\end{lstlisting}
+
+% ------------------------------------------------------------
+\subsubsection{Suite de pruebas implementadas}
+% ------------------------------------------------------------
+
+Se implementaron \textbf{cinco pruebas base} en \texttt{tests/test\_login.py}
+que cubren las categorías solicitadas por la rúbrica, más una prueba
+data-driven con \texttt{@pytest.mark.parametrize}. El Cuadro~\ref{tab:casos-prueba}
+sintetiza los casos.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Casos de prueba implementados en la suite E2E de Cal.com.}
+  \label{tab:casos-prueba}
+  \begin{tabular}{llp{5.5cm}l}
+    \toprule
+    \textbf{ID} & \textbf{Tipo} & \textbf{Descripción} & \textbf{Archivo} \\
+    \midrule
+    TC-LOGIN-01 & Válido    & Login con credenciales correctas; verifica redirección al dashboard.
+                           & \texttt{test\_login.py} \\
+    TC-LOGIN-02 & Error     & Login con contraseña incorrecta; verifica mensaje de error.
+                           & \texttt{test\_login.py} \\
+    TC-LOGIN-03 & Frontera  & Ambos campos vacíos; el sistema no debe avanzar al dashboard.
+                           & \texttt{test\_login.py} \\
+    TC-LOGIN-04 & Frontera  & Email sin símbolo \texttt{@}; valor justo fuera del dominio válido.
+                           & \texttt{test\_login.py} \\
+    TC-LOGIN-05 & Error     & Email formalmente válido pero sin cuenta registrada.
+                           & \texttt{test\_login.py} \\
+    TC-LOGIN-06 & Data-driven & 7 combinaciones de credenciales inválidas con
+                               \texttt{@pytest.mark.parametrize}.
+                           & \texttt{test\_login.py} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El diseño de los casos de frontera sigue la técnica de \textit{partición
+de equivalencia} y \textit{análisis de valores límite} descrita por
+\textcite{Jorgensen2022}: el email sin \texttt{@} representa un valor
+justo fuera del dominio de entradas válidas, mientras que la cadena vacía
+(\texttt{""}) constituye el límite inferior de longitud del campo.
+
+\paragraph{Prueba data-driven (TC-LOGIN-06).}
+El Listado~\ref{lst:data-driven} muestra la implementación de la prueba
+parametrizada que cubre siete variaciones de credenciales inválidas en una
+sola función:
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  caption={Prueba data-driven \texttt{TC-LOGIN-06} con \texttt{@pytest.mark.parametrize}.},
+  label={lst:data-driven}
+]
+CREDENCIALES_INVALIDAS = [
+    ("",                        "",          "ambos_campos_vacios"),
+    ("usuario_sin_arroba.com",  VALID_PWD,   "email_sin_arroba"),
+    (VALID_EMAIL,               "a",         "password_de_1_caracter"),
+    ("noexiste@calcom-qa.com",  "P@ss2024",  "email_inexistente"),
+    ("usuario@",                VALID_PWD,   "email_dominio_faltante"),
+    ("@dominio.com",            VALID_PWD,   "email_sin_usuario"),
+    (VALID_EMAIL,               "",          "password_vacio"),
+]
+
+@pytest.mark.parametrize(
+    "email, password, caso",
+    CREDENCIALES_INVALIDAS,
+    ids=[c[2] for c in CREDENCIALES_INVALIDAS],
+)
+def test_login_credenciales_invalidas_parametrizado(
+        driver, email, password, caso):
+    login = LoginPage(driver, base_url=BASE_URL)
+    login.abrir()
+    login.hacer_login(email, password)
+    assert not login.login_exitoso(), (
+        f"[{caso}] '{email}' / '{password}' "
+        f"no deberia permitir acceso al dashboard."
+    )
+\end{lstlisting}
+
+% ------------------------------------------------------------
+\subsubsection{Uso de esperas explícitas}
+% ------------------------------------------------------------
+
+Toda la sincronización entre el driver y la aplicación se implementa
+exclusivamente con \texttt{WebDriverWait} y \texttt{expected\_conditions}
+de Selenium. El uso de \texttt{time.sleep} está prohibido en la suite
+por las razones técnicas señaladas por \textcite{Garcia2022}: las esperas
+fijas desperdician tiempo en entornos rápidos y generan fallos intermitentes
+en entornos lentos (el problema conocido como \textit{flaky tests}).
+
+Los Page Objects centralizan este comportamiento en dos métodos privados:
+\texttt{\_esperar\_elemento\_visible} (usa \texttt{visibility\_of\_element\_located})
+y \texttt{\_esperar\_elemento\_clickable} (usa \texttt{element\_to\_be\_clickable}),
+con un \textit{timeout} predeterminado de 15 segundos configurable por
+instancia. Ninguna prueba llama directamente a \texttt{WebDriverWait};
+siempre lo hace a través del Page Object, preservando el encapsulamiento.
+
+% ------------------------------------------------------------
+\subsubsection{Ejecución de la suite y resultados}
+% ------------------------------------------------------------
+
+La suite se ejecuta con el siguiente comando, que activa simultáneamente
+la recolección de cobertura (para posterior consumo por SonarQube) y la
+generación del reporte HTML:
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  language=bash,
+  caption={Comando de ejecución de la suite E2E con cobertura y reporte HTML.},
+  label={lst:comando-pytest}
+]
+python -m pytest tests/ ^
+    --cov=pages ^
+    --cov-report=xml ^
+    --html=reports/reporte_e2e.html ^
+    --self-contained-html ^
+    -v
+\end{lstlisting}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{img/Captura de pantalla 2026-06-21 195221.png}
+  \caption{Salida de la terminal tras la ejecución completa de la suite con pytest.}
+  \label{fig:terminal-pytest}
+\end{figure}
+
+La Figura~\ref{fig:terminal-pytest} muestra la salida de la terminal.
+Se ejecutaron 19 casos en total: 12 aprobados (\textit{passed}) y
+7 omitido (\textit{skipped}), correspondiente a una prueba del flujo de
+booking que requiere la instancia local del proyecto para acceder al
+formulario de confirmación.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{img/Captura de pantalla 2026-06-21 195523.png}
+  \caption{Reporte HTML generado por pytest-html con el resumen y detalle de cada caso de prueba.}
+  \label{fig:reporte-html}
+\end{figure}
+
+
+El Cuadro~\ref{tab:resultados-suite} consolida los resultados obtenidos.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Resultados de la ejecución de la suite E2E de Cal.com.}
+  \label{tab:resultados-suite}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Módulo / archivo} & \textbf{Casos} & \textbf{Resultado} \\
+    \midrule
+    \texttt{tests/test\_login.py} — pruebas individuales & 5 & 5 PASSED \\
+    \texttt{tests/test\_login.py} — data-driven (TC-LOGIN-06) & 7 & 7 PASSED \\
+    \texttt{tests/test\_booking.py} & 7 & 7 SKIPPED \\
+    \midrule
+    \textbf{Total} & \textbf{19} & \textbf{12 passed, 7 skipped} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Cobertura de código.}
+La ejecución con \texttt{pytest-cov} produjo una cobertura agregada del
+\textbf{73\,\%} sobre el directorio \texttt{pages/}:
+\texttt{login\_page.py} alcanzó el 88\,\%, mientras que
+\texttt{booking\_page.py} llegó al 61\,\% debido a las pruebas de
+booking que se ejecutaron en modo \textit{skip} por depender de la
+instancia local. El archivo \texttt{coverage.xml} generado se integra
+a SonarQube como se describe en la sección~4.4, vinculando en un mismo
+tablero la cobertura de pruebas con las métricas de análisis estático.
+
+% ============================================================
+%  SECCIÓN 4.4 — Pruebas data-driven (Diego Calva)
+% ============================================================
+\subsection{Pruebas data-driven y conexión de cobertura con \texttt{pytest-cov}}
+
+\subsubsection{Objetivo de la implementación}
+
+Para reducir la duplicación de código y ejecutar un mismo flujo con distintos datos de entrada, se diseñó una prueba \textit{data-driven} para el módulo de autenticación de Cal.com. La implementación utiliza el decorador \texttt{@pytest.mark.parametrize} y obtiene los datos desde un archivo CSV externo.
+
+La separación entre la lógica de prueba y los datos permite ampliar los escenarios sin crear una función diferente para cada combinación. Este enfoque también mejora la mantenibilidad de la suite y facilita la identificación de fallas específicas.
+
+La cobertura se integró mediante \texttt{pytest-cov}, con salida en terminal, reporte HTML y archivo XML compatible con SonarQube.
+
+\subsubsection{Diseño de los casos de prueba}
+
+La prueba valida el inicio de sesión de Cal.com con datos válidos, inválidos y de frontera. Los escenarios definidos se muestran en la Tabla~\ref{tab:data-driven-login}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Casos data-driven para el inicio de sesión de Cal.com}
+\label{tab:data-driven-login}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{1.4cm}|X|X|}
+\hline
+\textbf{ID} & \textbf{Datos de entrada} & \textbf{Resultado esperado} \\
+\hline
+DD-01 & Correo y contraseña válidos & El usuario inicia sesión y abandona la ruta \texttt{/auth/login}. \\
+\hline
+DD-02 & Correo sin formato válido & El navegador muestra una validación del campo de correo. \\
+\hline
+DD-03 & Correo vacío & El formulario marca el campo de correo como obligatorio. \\
+\hline
+DD-04 & Contraseña vacía & El formulario marca el campo de contraseña como obligatorio. \\
+\hline
+DD-05 & Contraseña incorrecta & La aplicación muestra un error de autenticación y no inicia sesión. \\
+\hline
+\end{tabularx}
+\end{table}
+
+Las credenciales válidas se obtienen mediante las variables de entorno \texttt{CALCOM\_TEST\_EMAIL} y \texttt{CALCOM\_TEST\_PASSWORD}. Con ello, el repositorio puede conservar los casos de prueba sin exponer información sensible.
+
+\subsubsection{Archivo de datos CSV}
+
+Los datos de entrada se almacenaron en el archivo \texttt{tests/data/login\_cases.csv}. Cada fila representa una ejecución independiente de la misma prueba.
+
+\begin{lstlisting}[caption={Archivo CSV con los casos de prueba data-driven}]
+id,email,password,expected,description
+DD-01,ENV:CALCOM_TEST_EMAIL,ENV:CALCOM_TEST_PASSWORD,success,Credenciales validas
+DD-02,correo-sin-arroba,Password123!,validation,Formato de correo invalido
+DD-03,,Password123!,validation,Correo vacio
+DD-04,usuario@example.com,,validation,Contrasena vacia
+DD-05,usuario@example.com,ContrasenaIncorrecta123!,auth_error,Contrasena incorrecta
+\end{lstlisting}
+
+El prefijo \texttt{ENV:} identifica los valores que se recuperan desde variables de entorno. Esta estructura mantiene separados los datos sensibles y los datos versionados.
+
+\subsubsection{Implementación de la prueba parametrizada}
+
+La función \texttt{load\_login\_cases()} abre el archivo CSV, transforma cada fila en un diccionario y sustituye los valores con prefijo \texttt{ENV:} por el contenido de las variables de entorno correspondientes.
+
+\begin{lstlisting}[language=Python,caption={Prueba data-driven con \texttt{@pytest.mark.parametrize}}]
+from __future__ import annotations
+
+import csv
+import os
+from pathlib import Path
+import pytest
+from pages.login_page import LoginPage
+DATA_FILE = Path(__file__).parent / "data" / "login_cases.csv"
+
+def _resolve_value(value: str) -> str:
+    if value.startswith("ENV:"):
+        return os.getenv(value.removeprefix("ENV:"), "")
+    return value
+def load_login_cases() -> list[dict[str, str]]:
+    with DATA_FILE.open(encoding="utf-8", newline="") as file:
+        cases = list(csv.DictReader(file))
+    for case in cases:
+        case["email"] = _resolve_value(case["email"])
+        case["password"] = _resolve_value(case["password"])
+    return cases
+
+@pytest.mark.e2e
+@pytest.mark.parametrize(
+    "case",
+    load_login_cases(),
+    ids=lambda case: case["id"],
+)
+def test_login_data_driven(
+    driver,
+    base_url: str,
+    case: dict[str, str],
+) -> None:
+    if case["id"] == "DD-01" and (
+        not case["email"] or not case["password"]
+    ):
+        pytest.skip(
+            "Credenciales de prueba no disponibles "
+            "en las variables de entorno."
+        )
+    login_page = LoginPage(driver, base_url)
+    login_page.open()
+    login_page.submit_credentials(
+        case["email"],
+        case["password"],
+    )
+    result = login_page.wait_for_result()
+    assert result.status == case["expected"], (
+        f"Caso {case['id']} ({case['description']}): "
+        f"se esperaba '{case['expected']}', "
+        f"pero se obtuvo '{result.status}'. "
+        f"Detalle: {result.message}"
+    )
+\end{lstlisting}
+
+Aunque existe una sola función, pytest registra cada fila del archivo CSV como una ejecución separada. Los casos \texttt{DD-01}, \texttt{DD-02}, \texttt{DD-03}, \texttt{DD-04} y \texttt{DD-05} aparecen individualmente en la terminal y en el reporte HTML.
+
+El argumento \texttt{ids=lambda case: case["id"]} asigna a cada ejecución el identificador definido en el CSV. Esto mejora la lectura de los resultados y permite localizar con rapidez el conjunto de datos relacionado con una falla.
+
+\evidencia
+{img/salida\_pytest.png}
+{Evidencia de ejecución de los casos data-driven en pytest}
+{Salida de pytest con la ejecución individual de los casos DD-01 a DD-05.}
+
+\subsubsection{Integración con Page Object Model}
+
+La prueba se apoya en el Page Object \texttt{LoginPage}. Este objeto concentra los localizadores y las operaciones relacionadas con el inicio de sesión: abrir la página, ingresar credenciales, enviar el formulario y esperar el resultado.
+
+\begin{lstlisting}[language=Python,caption={Fragmento principal del Page Object \texttt{LoginPage}}]
+from dataclasses import dataclass
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+@dataclass(frozen=True)
+class LoginResult:
+    status: str
+    message: str = ""
+class LoginPage:
+    EMAIL = (
+        By.CSS_SELECTOR,
+        'input[name="email"], input[type="email"]',
+    )
+    PASSWORD = (
+        By.CSS_SELECTOR,
+        'input[name="password"], input[type="password"]',
+    )
+    SUBMIT = (By.CSS_SELECTOR, 'button[type="submit"]')
+    ERROR = (
+        By.CSS_SELECTOR,
+        '[role="alert"], [data-testid="toast-error"], '
+        '[data-testid*="error"]',
+    )
+
+    def __init__(self, driver, base_url: str, timeout: int = 12):
+        self.driver = driver
+        self.base_url = base_url.rstrip("/")
+        self.wait = WebDriverWait(driver, timeout)
+
+    def open(self) -> None:
+        self.driver.get(f"{self.base_url}/auth/login")
+        self.wait.until(
+            EC.visibility_of_element_located(self.EMAIL)
+        )
+
+    def submit_credentials(self, email: str, password: str) -> None:
+        email_input = self.wait.until(
+            EC.visibility_of_element_located(self.EMAIL)
+        )
+        email_input.clear()
+        email_input.send_keys(email)
+        password_fields = self.driver.find_elements(*self.PASSWORD)
+        if not password_fields:
+            self.wait.until(
+                EC.element_to_be_clickable(self.SUBMIT)
+            ).click()
+            password_input = self.wait.until(
+                EC.visibility_of_element_located(self.PASSWORD)
+            )
+        else:
+            password_input = password_fields[0]
+        password_input.clear()
+        password_input.send_keys(password)
+        self.wait.until(
+            EC.element_to_be_clickable(self.SUBMIT)
+        ).click()
+\end{lstlisting}
+
+La sincronización con la interfaz se realizó mediante esperas explícitas con \texttt{WebDriverWait}. El uso de condiciones explícitas evita depender de pausas fijas y reduce la inestabilidad de las pruebas.
+
+Los localizadores consideran atributos comunes del formulario de autenticación, como \texttt{name}, \texttt{type}, \texttt{role} y \texttt{data-testid}.
+
+\subsection{Configuración de pytest y pytest-cov}
+
+La suite utiliza Selenium, pytest, pytest-cov y pytest-html. Las dependencias se instalaron con el siguiente comando:
+
+\begin{lstlisting}[caption={Instalación de dependencias para la suite}]
+pip install selenium pytest pytest-cov pytest-html
+\end{lstlisting}
+
+La configuración de pytest se almacenó en el archivo \texttt{pytest.ini}:
+
+\begin{lstlisting}[caption={Configuración del archivo \texttt{pytest.ini}}]
+[pytest]
+testpaths = tests
+python_files = test_*.py
+markers =
+    e2e: pruebas de extremo a extremo con navegador
+addopts =
+    -v
+    --strict-markers
+    --html=reports/reporte_pytest.html
+    --self-contained-html
+    --cov=pages
+    --cov-branch
+    --cov-report=term-missing
+    --cov-report=xml:reports/coverage.xml
+    --cov-report=html:reports/htmlcov
+\end{lstlisting}
+
+Esta configuración genera una salida detallada en terminal, un reporte HTML de la ejecución, un reporte HTML de cobertura y un archivo XML compatible con SonarQube.
+
+La ejecución principal queda reducida al comando siguiente:
+
+\begin{lstlisting}[caption={Ejecución mediante la configuración de \texttt{pytest.ini}}]
+pytest
+\end{lstlisting}
+
+La misma ejecución puede expresarse de forma completa mediante los parámetros configurados:
+
+\begin{lstlisting}[caption={Ejecución de pruebas y generación de reportes}]
+pytest -v \
+  --cov=pages \
+  --cov-branch \
+  --cov-report=term-missing \
+  --cov-report=xml:reports/coverage.xml \
+  --cov-report=html:reports/htmlcov \
+  --html=reports/reporte_pytest.html \
+  --self-contained-html
+\end{lstlisting}
+
+\subsubsection{Configuración del entorno de prueba}
+
+La instancia local y las credenciales de prueba se administran mediante variables de entorno. En PowerShell se utilizó la siguiente configuración:
+
+\begin{lstlisting}[caption={Variables de entorno en PowerShell}]
+$env:CALCOM_BASE_URL="http://localhost:3000"
+$env:CALCOM_TEST_EMAIL="usuario_prueba@ejemplo.com"
+$env:CALCOM_TEST_PASSWORD="ContrasenaDePrueba123!"
+pytest
+\end{lstlisting}
+
+La configuración equivalente en Linux o macOS es la siguiente:
+
+\begin{lstlisting}[caption={Variables de entorno en Linux o macOS}]
+export CALCOM_BASE_URL="http://localhost:3000"
+export CALCOM_TEST_EMAIL="usuario_prueba@ejemplo.com"
+export CALCOM_TEST_PASSWORD="ContrasenaDePrueba123!"
+pytest
+\end{lstlisting}
+
+\subsection{Reportes generados}
+
+La ejecución genera la siguiente estructura de archivos:
+
+\begin{lstlisting}[caption={Archivos generados por pytest}]
+reports/
+|-- coverage.xml
+|-- reporte_pytest.html
+`-- htmlcov/
+    `-- index.html
+\end{lstlisting}
+
+El archivo \texttt{reporte\_pytest.html} contiene el resultado de cada caso de prueba. El archivo \texttt{htmlcov/index.html} presenta la cobertura por archivo y por línea. El archivo \texttt{coverage.xml} contiene la información de cobertura utilizada por SonarQube.
+
+\evidencia
+{img/reporte_pytest_html.png}
+{Evidencia del reporte HTML de la ejecución}
+{Reporte HTML generado por pytest-html.}
+
+\evidencia
+{img/reporte_cobertura_html.png}
+{Evidencia del reporte HTML de cobertura}
+{Reporte de cobertura por archivo y por línea generado por pytest-cov.}
+
+\subsection{Conexión de la cobertura con SonarQube}
+
+La cobertura XML se incorporó al análisis mediante la propiedad \texttt{sonar.python.coverage.reportPaths} del archivo \texttt{sonar-project.properties}:
+
+\begin{lstlisting}[caption={Configuración de cobertura Python en SonarQube}]
+sonar.python.coverage.reportPaths=selenium_tests/reports/coverage.xml
+\end{lstlisting}
+
+Esta ruta vincula el análisis de SonarQube con el reporte producido por pytest-cov dentro de la carpeta de pruebas Selenium.
+
+\texttt{pytest-cov} mide las líneas de código Python ejecutadas durante la suite. En esta implementación, la medición corresponde principalmente a los Page Objects y a las utilidades utilizadas por Selenium.
+
+Cal.com está desarrollado principalmente con Next.js y TypeScript, por lo que la cobertura generada por pytest-cov no representa por sí sola la cobertura completa de la aplicación. La cobertura del código JavaScript y TypeScript se incorpora mediante un reporte LCOV:
+
+\begin{lstlisting}[caption={Configuración de cobertura JavaScript y TypeScript en SonarQube}]
+sonar.javascript.lcov.reportPaths=coverage/lcov.info
+\end{lstlisting}
+
+De esta manera, SonarQube puede integrar la cobertura XML del código Python de automatización y la cobertura LCOV del código principal de Cal.com sin confundir ambas mediciones.
+
+\evidencia
+{img/sonarqube_cobertura.png}
+{Evidencia de la cobertura incorporada en SonarQube}
+{Cobertura registrada en el tablero de SonarQube.}
+
+\subsubsection{Interpretación de la implementación}
+
+El diseño data-driven permite verificar múltiples combinaciones de entrada sin duplicar funciones. Los nuevos escenarios se agregan en el archivo CSV, mientras que la lógica central de la prueba permanece sin cambios.
+
+La parametrización también mejora la trazabilidad, ya que cada conjunto de datos conserva un identificador propio dentro de la salida de pytest y del reporte HTML.
+
+El reporte \texttt{term-missing} señala las líneas de Python que no fueron ejecutadas. El reporte HTML facilita la revisión visual por archivo, mientras que el archivo \texttt{coverage.xml} permite trasladar la métrica a SonarQube.
+
+La separación entre la cobertura de Python y la cobertura de TypeScript evita interpretar la ejecución de los Page Objects como si representara la totalidad del código de Cal.com.
+
+\subsubsection{Conclusión}
+
+La implementación integró una prueba data-driven mediante \texttt{@pytest.mark.parametrize}, datos externos en formato CSV y variables de entorno para proteger las credenciales. La estructura permite ejecutar casos válidos, inválidos y de frontera desde una sola función de prueba.
+
+La integración con pytest-cov genera resultados en terminal, un reporte HTML y un archivo XML de cobertura. Este último se conecta con SonarQube mediante \texttt{sonar.python.coverage.reportPaths}.
+
+El enfoque mejora la mantenibilidad, la trazabilidad y la integración de la suite con procesos posteriores de análisis de calidad e integración continua.
+
+
+% ============================================================
+%  SECCIÓN 4.5 — Análisis estático con SonarQube
+% ============================================================
+\subsection{Análisis estático con SonarQube}
+
+El análisis estático de código constituye una práctica central en la ingeniería de calidad
+de software, ya que permite identificar defectos, vulnerabilidades y problemas de
+mantenibilidad directamente sobre el código fuente, sin necesidad de ejecutar la
+aplicación (Khorikov, 2020). En el contexto del proyecto integrador ---Cal.com, una
+plataforma construida sobre Next.js, TypeScript y Prisma--- se optó por SonarQube como
+herramienta principal de análisis estático, decisión justificada en la sección de
+investigación de análisis estático del presente documento.
+
+\subsubsection{Configuración del proyecto}
+
+El análisis se realizó sobre la instancia local del repositorio disponible en
+\url{https://github.com/UP240080/EyMDSW-Calcom}. SonarQube se ejecutó en un
+contenedor Docker con la edición \textit{Community}:
+
+\begin{lstlisting}[language=bash,caption={Levantamiento del servidor SonarQube con Docker}]
+docker run -d --name sonarqube \
+  -p 9000:9000 \
+  sonarqube:community
+\end{lstlisting}
+
+El análisis del código fuente se lanzó mediante el escáner oficial de SonarSource:
+
+\begin{lstlisting}[language=bash,caption={Ejecución del sonar-scanner sobre el repositorio}]
+docker run --rm \
+  -v "$PWD:/usr/src" \
+  --network host \
+  sonarsource/sonar-scanner-cli \
+  -Dsonar.projectKey=calcom \
+  -Dsonar.sources=apps/web/pages,packages \
+  -Dsonar.exclusions=**/node_modules/**,**/*.test.ts,**/*.spec.ts \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=admin \
+  -Dsonar.password=admin
+\end{lstlisting}
+
+El archivo \texttt{sonar-project.properties} centraliza los parámetros de configuración
+para facilitar la integración con el pipeline de CI:
+
+\begin{lstlisting}[caption={Archivo sonar-project.properties del proyecto}]
+sonar.projectKey=calcom-integrador
+sonar.projectName=Cal.com - EyMDSW
+sonar.projectVersion=1.0
+sonar.sources=apps/web/pages,packages
+sonar.tests=selenium_tests/tests
+sonar.exclusions=**/node_modules/**,**/*.test.ts,**/*.spec.ts,**/.next/**
+sonar.language=ts
+sonar.python.coverage.reportPaths=selenium_tests/reports/coverage.xml
+sonar.javascript.lcov.reportPaths=coverage/lcov.info
+sonar.host.url=http://localhost:9000
+sonar.login=admin
+\end{lstlisting}
+
+\subsubsection{Tablero de calidad del proyecto}
+
+Una vez ejecutado el escáner, el tablero de SonarQube consolidó el estado de calidad
+del repositorio bajo las cinco dimensiones definidas por la plataforma.
+
+\evidencia
+{img/sonar_dashboard.png}
+{Tablero general de SonarQube para Cal.com}
+{Tablero general de SonarQube para el proyecto Cal.com.}
+
+\subsubsection{Las cinco dimensiones de calidad}
+
+SonarQube evalúa la calidad del código a través de cinco dimensiones principales.
+La Tabla~\ref{tab:sonar_dimensiones} resume los resultados obtenidos para el proyecto Cal.com.
+
+\begin{longtable}{|p{3.2cm}|p{1.8cm}|p{7.5cm}|}
+\hline
+\textbf{Dimensión} & \textbf{Rating} & \textbf{Descripción del resultado} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Dimensión} & \textbf{Rating} & \textbf{Descripción del resultado} \\
+\hline
+\endhead
+
+Reliability & B & Se detectaron \textit{bugs} clasificados como mayores que podrían provocar comportamiento inesperado en el flujo de reservas. El rating A exige cero bugs. \\
+\hline
+Security & A & No se reportaron vulnerabilidades críticas en el código analizado. Sin embargo, se identificaron \textit{security hotspots} que requieren revisión manual. \\
+\hline
+Maintainability & A & La deuda técnica acumulada se estimó en menos del 5\,\% del tiempo de desarrollo total del proyecto, dentro del umbral aceptable. \\
+\hline
+Coverage & -- & La cobertura reportada corresponde a los Page Objects de la suite Selenium (89.33\,\%, generada por \texttt{pytest-cov}). La cobertura del código TypeScript requiere un reporte LCOV generado por las pruebas nativas del proyecto. \\
+\hline
+Duplications & -- & Se identificó duplicación de código en componentes de UI del directorio \texttt{apps/web/pages}, principalmente en patrones de manejo de formularios y llamadas a la API. \\
+\hline
+\caption{Resumen de las cinco dimensiones de calidad en SonarQube para Cal.com.}
+\label{tab:sonar_dimensiones}
+\end{longtable}
+
+\paragraph{Reliability.}
+Los \textit{bugs} detectados se concentraron en lógica de manejo de valores nulos
+en componentes de disponibilidad y en llamadas a \texttt{Promise} sin manejo de rechazo.
+
+\paragraph{Security.}
+Los \textit{security hotspots} son fragmentos sensibles que no representan
+vulnerabilidades confirmadas, pero requieren revisión humana para descartar un riesgo
+real (SonarSource, s.f.). En Cal.com, los hotspots detectados involucran el uso de
+\texttt{localStorage} y la exposición de información en mensajes de error.
+
+\paragraph{Maintainability.}
+La deuda técnica en SonarQube se expresa como el tiempo estimado necesario para
+refactorizar todos los \textit{code smells}. En el proyecto, la mayoría correspondían a
+funciones con demasiados parámetros, variables no utilizadas y bloques con complejidad
+ciclomática elevada.
+
+\paragraph{Coverage.}
+La cobertura configurada vincula el reporte \texttt{coverage.xml} generado por
+\texttt{pytest-cov} con el código Python de los Page Objects, no con el código
+TypeScript de la aplicación principal.
+
+\paragraph{Duplications.}
+SonarQube marcó como duplicados bloques de código con alta similitud estructural en
+los componentes de formularios del módulo de reservas. La duplicación aumenta el
+riesgo de inconsistencias cuando se realizan cambios, ya que los bloques copiados
+deben actualizarse por separado (Aniche, 2022).
+
+\subsubsection{Análisis de issues reales encontrados}
+
+Se seleccionaron tres \textit{issues} representativos del análisis, cubriendo distintos
+tipos y niveles de severidad.
+
+\paragraph{Issue 1 --- Bug mayor: Promise sin manejo de rechazo.}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tipo:} Bug \quad \textbf{Severidad:} Major
+  \item \textbf{Regla:} \texttt{typescript:S4822}
+  \item \textbf{Archivo:} \texttt{apps/web/pages/api/availability/index.ts}, línea 47
+  \item \textbf{Descripción:} Una llamada asíncrona a la base de datos mediante Prisma
+        se realiza sin encadenar un bloque \texttt{.catch()} ni envolverla en
+        \texttt{try-catch}. Si la consulta falla, la promesa rechazada no se maneja,
+        lo que puede provocar un error no capturado que detenga el servidor Node.js
+        o devuelva una respuesta HTTP 500 sin información útil al cliente.
+  \item \textbf{Impacto:} Alto. El flujo de reservas depende de consultas de
+        disponibilidad; un error no capturado aquí impide completar una cita.
+\end{itemize}
+
+\paragraph{Issue 2 --- Code Smell: función con complejidad ciclomática excesiva.}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tipo:} Code Smell \quad \textbf{Severidad:} Critical
+  \item \textbf{Regla:} \texttt{typescript:S3776}
+  \item \textbf{Archivo:} \texttt{packages/core/EventManager.ts}, línea 112
+  \item \textbf{Descripción:} La función \texttt{buildEventData()} presenta una
+        complejidad ciclomática de 18, superando el umbral recomendado de 10
+        (Jorgensen, 2022). Concatena múltiples condiciones \texttt{if}/\texttt{else}
+        para determinar el comportamiento según el tipo de evento, lo que la hace
+        difícil de probar y de modificar sin introducir regresiones.
+  \item \textbf{Impacto:} Alto sobre la mantenibilidad. Cualquier modificación requiere
+        comprender y recorrer toda la función.
+\end{itemize}
+
+\paragraph{Issue 3 --- Security Hotspot: uso de \texttt{localStorage} para datos de sesión.}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Tipo:} Security Hotspot \quad \textbf{Severidad:} High (pendiente de revisión)
+  \item \textbf{Regla:} \texttt{typescript:S5122}
+  \item \textbf{Archivo:} \texttt{apps/web/lib/auth/session.ts}, línea 23
+  \item \textbf{Descripción:} Se almacena un token de autenticación en
+        \texttt{localStorage}, accesible desde cualquier script JavaScript en la
+        misma página. Esto es susceptible a ataques XSS si algún componente de
+        terceros introduce código malicioso.
+  \item \textbf{Impacto:} Potencialmente crítico en entornos de producción. Requiere
+        revisión manual para confirmar si el riesgo está mitigado por otros controles.
+\end{itemize}
+
+\subsubsection{Conexión de la cobertura de pytest con SonarQube}
+
+La cobertura generada por la suite Selenium se conectó a SonarQube mediante la
+propiedad \texttt{sonar.python.coverage.reportPaths} apuntando a
+\texttt{selenium\_tests/reports/coverage.xml}, producido por \texttt{pytest-cov}.
+
+De manera complementaria, la cobertura del código TypeScript se incorpora mediante
+\texttt{sonar.javascript.lcov.reportPaths}, consumiendo el reporte LCOV generado por
+las pruebas nativas del proyecto. Esta separación evita que SonarQube confunda la
+cobertura de los scripts Python de automatización con la del código de producción.
+
+\evidencia
+{img/sonar_issues.png}
+{Lista de issues detectados por SonarQube en Cal.com}
+{Issues detectados por SonarQube en el análisis del repositorio Cal.com.}
+
+
+% ============================================================
+%  SECCIÓN 4.6 — Plan de remediación de deuda técnica
+% ============================================================
+\subsection{Plan de remediación de deuda técnica}
+
+La deuda técnica es la diferencia entre el estado actual del código y el estado ideal
+que permitiría mantenerlo, extenderlo y probarlo con el menor esfuerzo posible
+(Khorikov, 2020). SonarQube cuantifica esta deuda como el tiempo total estimado para
+corregir todos los \textit{code smells} del proyecto; sin embargo, no todos los issues
+tienen el mismo valor de remediación: algunos afectan directamente la confiabilidad
+del sistema, otros la seguridad, y otros solo impactan la legibilidad del código.
+
+El enfoque \textbf{Clean as You Code} ---propuesto por SonarSource como estrategia de
+adopción gradual--- establece que el equipo debe priorizar la calidad del código nuevo
+por encima de la remediación masiva del código heredado: cada cambio que se incorpore
+al repositorio debe cumplir los umbrales del Quality Gate antes de fusionarse
+(SonarSource, s.f.). Bajo este criterio, la priorización de la tabla siguiente
+privilegia los issues que afectan los módulos que el equipo ha modificado o que
+modificará en las próximas iteraciones del proyecto integrador.
+
+\subsubsection{Criterios de priorización}
+
+Los issues se priorizaron según los siguientes criterios, aplicados en orden:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Tipo de issue:} Los \textit{bugs} tienen precedencia sobre los
+        \textit{hotspots} de seguridad, y estos sobre los \textit{code smells},
+        porque los bugs representan defectos con alta probabilidad de manifestarse
+        en tiempo de ejecución (Jorgensen, 2022).
+  \item \textbf{Severidad asignada por SonarQube:} Critical $>$ Major $>$ Minor.
+  \item \textbf{Impacto en flujos críticos:} Los módulos de reserva y autenticación
+        reciben mayor prioridad por ser los flujos que el equipo ha analizado y
+        probado a lo largo de la Unidad II.
+  \item \textbf{Esfuerzo estimado vs.\ impacto:} Issues de alto impacto y bajo
+        esfuerzo se ubican por encima de issues de menor impacto aunque sean
+        fáciles de corregir.
+\end{enumerate}
+
+\subsubsection{Tabla de remediación priorizada}
+
+\begin{longtable}{|p{0.5cm}|p{4.2cm}|p{2.1cm}|p{1.5cm}|p{1.5cm}|p{2.1cm}|}
+\hline
+\textbf{\#} & \textbf{Issue} & \textbf{Tipo / Severidad} & \textbf{Esfuerzo} & \textbf{Prioridad} & \textbf{Responsable} \\
+\hline
+\endfirsthead
+\hline
+\textbf{\#} & \textbf{Issue} & \textbf{Tipo / Severidad} & \textbf{Esfuerzo} & \textbf{Prioridad} & \textbf{Responsable} \\
+\hline
+\endhead
+
+1 & Promise sin manejo de rechazo en API de disponibilidad (\texttt{S4822}) & Bug / Major & 30 min & \textbf{Alta} & Backend \\
+\hline
+2 & Función \texttt{buildEventData()} con complejidad ciclomática~18 (\texttt{S3776}) & Smell / Critical & 3 h & \textbf{Alta} & Backend \\
+\hline
+3 & Token de sesión en \texttt{localStorage} (\texttt{S5122}) & Hotspot / High & 2 h & \textbf{Alta} & Frontend \\
+\hline
+4 & Variables declaradas sin uso en módulo de reservas (\texttt{S1481}) & Smell / Minor & 15 min & \textbf{Media} & Todo el equipo \\
+\hline
+5 & Bloques duplicados en formularios de reserva & Smell / Major & 2 h & \textbf{Media} & Frontend \\
+\hline
+6 & Manejo de errores ausente en proveedor de calendario externo & Bug / Minor & 1 h & \textbf{Media} & Backend \\
+\hline
+7 & Funciones con demasiados parámetros en utilidades de Prisma (\texttt{S107}) & Smell / Minor & 1 h & \textbf{Baja} & Equipo (backlog) \\
+\hline
+8 & Comentarios \texttt{TODO} sin ticket en código de producción & Smell / Info & 10 min & \textbf{Baja} & Todo el equipo \\
+\hline
+\caption{Plan de remediación de deuda técnica priorizado por severidad e impacto}
+\label{tab:remediation}
+\end{longtable}
+
+\subsubsection{Justificación del orden}
+
+\paragraph{Issues 1 y 2 (Alta).}
+La promesa sin manejo de rechazo (issue~1) puede provocar la caída del servidor
+Node.js en tiempo de ejecución, afectando directamente la disponibilidad de Cal.com.
+Su corrección es inmediata: basta con agregar un bloque \texttt{try-catch} alrededor
+de la consulta Prisma o encadenar un \texttt{.catch()}.
+
+El issue~2 ---la función con complejidad ciclomática de 18--- no produce un fallo
+inmediato, pero representa un riesgo de regresión elevado: cualquier nueva condición
+añadida a \texttt{buildEventData()} tiene alta probabilidad de introducir un defecto
+en una rama existente no cubierta por pruebas (Aniche, 2022). Reducir la complejidad
+extrayendo funciones auxiliares por tipo de evento es una inversión que reducirá el
+costo de las futuras iteraciones del proyecto integrador.
+
+\paragraph{Issue 3 (Alta --- Seguridad).}
+El almacenamiento de tokens en \texttt{localStorage} es una vulnerabilidad
+ampliamente documentada en aplicaciones web. Aunque la explotación requiere un
+vector XSS previo, Cal.com integra componentes de calendario de terceros que
+representan una superficie de ataque no trivial. La migración hacia cookies
+\texttt{HttpOnly} es un cambio de dos horas con impacto de seguridad significativo
+y sin efectos secundarios observables para el usuario final.
+
+\paragraph{Issues 4, 5 y 6 (Media).}
+Estos issues no afectan el funcionamiento actual del sistema, pero incrementan el
+esfuerzo de mantenimiento. La duplicación de código en formularios (issue~5) es
+especialmente relevante porque los tests E2E de la sección anterior ya cubren esos
+formularios: si el equipo modifica uno de los bloques duplicados pero no el otro,
+las pruebas podrían no detectar la inconsistencia.
+
+\paragraph{Issues 7 y 8 (Baja).}
+Son mejoras de higiene que se abordan de forma continua. Al abrir un Pull Request
+que toque los archivos afectados, el desarrollador responsable corrige el smell
+antes de solicitar la revisión. Esta práctica evita que la deuda técnica baja se
+acumule sin requerir una sesión de remediación dedicada.
+
+\subsubsection{Conexión con Clean as You Code}
+
+El enfoque \textit{Clean as You Code} propone que el Quality Gate evalúe únicamente
+el código nuevo o modificado en cada análisis, de modo que el equipo no se bloquee
+por deuda acumulada en código heredado, pero sí garantice que las nuevas
+contribuciones elevan el estándar de calidad (SonarSource, s.f.). Para Cal.com se
+propone el siguiente Quality Gate mínimo:
+
+\begin{itemize}[leftmargin=*]
+  \item Cero bugs nuevos de severidad Major o Critical.
+  \item Cero vulnerabilidades de seguridad confirmadas.
+  \item Cobertura del código nuevo $\geq$ 80\,\%.
+  \item Duplicación de código nuevo $\leq$ 3\,\%.
+  \item Todos los Security Hotspots revisados (estado \textit{Reviewed}).
+\end{itemize}
+
+Este criterio es coherente con las condiciones de bloqueo del pipeline de CI: un
+análisis que no cumpla estos umbrales impide la fusión automática de la rama al
+repositorio principal.
+
+\evidencia
+{img/sonar_quality_gate.png}
+{Quality Gate configurado en SonarQube para el proyecto Cal.com}
+{Quality Gate del proyecto Cal.com en SonarQube.}
+
+\subsection{Conclusión integral}
+La implementación de herramientas de automatización y análisis estático en nuestra plataforma J\&C representó un punto de inflexión en nuestra forma de concebir la calidad del software. Al transicionar de pruebas manuales a una suite E2E estructurada con Selenium y el patrón Page Object Model, comprendimos el valor de la mantenibilidad en el código de pruebas. Asimismo, la integración de SonarQube nos expuso a la realidad de nuestra deuda técnica; dimensionar los defectos y vulnerabilidades nos demostró que no basta con que el código funcione, sino que debe ser seguro y confiable. Finalmente, consolidar este flujo en un entorno de versionamiento colaborativo con Git fortaleció nuestra dinámica de trabajo, evidenciando que la calidad es un esfuerzo continuo y automatizable.
+
+\subsection{Aportes individuales y control de versiones}
+El desarrollo de esta tarea se gestionó íntegramente mediante control de versiones con Git. El historial de \textit{commits} en el repositorio del proyecto evidencia la participación colaborativa de todos los integrantes. A continuación, se detalla la contribución específica de cada miembro:
+
+\begin{itemize}
+    \item \textbf{Yael Cervantes:} Lideró la fase de investigación teórica, comparando exhaustivamente tres frameworks de automatización de pruebas E2E y tres herramientas de análisis estático de código. Su análisis crítico permitió fundamentar las decisiones tecnológicas del equipo.
+    
+    \item \textbf{Gabriela González:} Estuvo a cargo de la implementación principal de la suite de pruebas E2E utilizando Selenium y \texttt{pytest}. Diseñó la arquitectura de pruebas aplicando el patrón Page Object Model (POM) para asegurar la escalabilidad.
+    
+    \item \textbf{Diego Calva:} Complementó la suite de pruebas mediante el diseño e implementación de pruebas \textit{data-driven}. Además, fue responsable de configurar y conectar la cobertura de código utilizando \texttt{pytest-cov}, asegurando la medición de las pruebas.
+    
+    \item \textbf{Rebeca De La Cruz:} Dirigió el análisis de calidad del proyecto integrador configurando e interpretando los resultados en SonarQube. A partir de las dimensiones evaluadas, estructuró el plan priorizado de remediación de deuda técnica.
+    
+    \item \textbf{Diana Macias:} Lideró la consolidación documental del proyecto y la gestión del control de versiones. Se encargó de redactar la conclusión integral, documentar el aporte de cada integrante, administrar el repositorio en Git y asegurar el cumplimiento de la estructura formal del documento.
+\end{itemize}
+
+% ============================================================
+%  REFERENCIAS
+% ============================================================
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+Aniche, M. (2022). \textit{Effective software testing: A developer's guide}. Manning.
+
+García, B. (2022). \textit{Hands-on Selenium WebDriver with Java}. O'Reilly Media.
+
+Jorgensen, P. C. (2022). \textit{Software testing: A craftsman's approach} (5.a ed.). CRC Press.
+
+Khorikov, V. (2020). \textit{Unit testing: Principles, practices, and patterns}. Manning.
+
+pytest. (s.f.). \textit{How to parametrize fixtures and test functions}. \url{https://docs.pytest.org}
+
+pytest-cov. (s.f.). \textit{Coverage reporting with pytest-cov}. \url{https://pytest-cov.readthedocs.io}
+
+SonarSource. (s.f.). \textit{Python test coverage}. Documentación oficial de SonarQube. \url{https://docs.sonarsource.com}
+
+
+
+
+
+\end{document}

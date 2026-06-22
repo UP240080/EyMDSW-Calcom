@@ -1,0 +1,13 @@
+# requirements.txt — Dependencias de la suite E2E de Cal.com
+# Instalar con: pip install -r requirements.txt
+
+# ── Core de automatización ──────────────────────────────────────────────────
+selenium==4.21.0            # WebDriver + soporte para Chromium, Firefox y Edge
+
+# ── Framework de pruebas ────────────────────────────────────────────────────
+pytest==8.2.2               # Motor de pruebas
+pytest-html==4.1.1          # Reporte HTML con capturas y metadatos
+pytest-cov==5.0.0           # Cobertura de código (genera coverage.xml para SonarQube)
+
+# ── Utilidades opcionales ───────────────────────────────────────────────────
+pytest-timeout==2.3.1       # Límite de tiempo por prueba (evita pruebas colgadas en CI)
